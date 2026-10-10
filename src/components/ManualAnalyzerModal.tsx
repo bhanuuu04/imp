@@ -101,42 +101,42 @@ export function ManualAnalyzerModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
-      <div className="w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+      <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="p-4 lg:p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-50 border border-cyan-200 text-cyan-700">
-              <Terminal className="w-5 h-5" />
+        <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700">
+              <Terminal className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span>Astra Forensic Diagnostic Lab</span>
+              <h2 className="text-sm font-bold text-slate-900">
+                Threat Diagnostic Sandbox
               </h2>
-              <p className="text-xs text-slate-500 font-mono">
-                Test any suspect Direct Message, Sender Handle, or Rogue APK link
+              <p className="text-xs text-slate-500">
+                Evaluate candidate messages and handles against Astra&apos;s real-time risk scoring engine.
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition"
+            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
-          <form onSubmit={handleRunAnalysis} className="space-y-4">
+        <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs">
+          <form onSubmit={handleRunAnalysis} className="space-y-3.5">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="text-xs font-mono text-slate-700 font-semibold">Social Channel</label>
+                <label className="text-slate-700 font-medium">Platform Channel</label>
                 <select
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value as SocialPlatform)}
-                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white"
+                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="x_twitter">X (Twitter)</option>
@@ -147,77 +147,74 @@ export function ManualAnalyzerModal({
               </div>
 
               <div>
-                <label className="text-xs font-mono text-slate-700 font-semibold">Sender Username (@)</label>
+                <label className="text-slate-700 font-medium">Sender Username (@)</label>
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. astra_mobile_support"
-                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white"
+                  placeholder="e.g. astra_support"
+                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono text-slate-700 font-semibold">Display Name</label>
+                <label className="text-slate-700 font-medium">Display Name</label>
                 <input
                   type="text"
                   required
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="e.g. Astra Support ✓"
-                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white"
+                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-mono text-slate-700 font-semibold">Followers Count</label>
+                <label className="text-slate-700 font-medium">Followers Count</label>
                 <input
                   type="number"
                   value={followers}
                   onChange={(e) => setFollowers(Number(e.target.value))}
-                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white"
+                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
                 />
               </div>
               <div>
-                <label className="text-xs font-mono text-slate-700 font-semibold">Following Count</label>
+                <label className="text-slate-700 font-medium">Following Count</label>
                 <input
                   type="number"
                   value={following}
                   onChange={(e) => setFollowing(Number(e.target.value))}
-                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white"
+                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-mono text-slate-700 font-semibold">Inbound Message Content</label>
+              <label className="text-slate-700 font-medium">Inbound Message Body</label>
               <textarea
                 required
                 rows={3}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Paste suspect message text..."
-                className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs font-mono text-slate-900 focus:outline-none focus:border-cyan-600 focus:bg-white leading-relaxed"
+                className="w-full mt-1 bg-white border border-slate-200 rounded-md p-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600 leading-relaxed"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold font-mono transition flex items-center justify-center gap-2 shadow-xs"
+              className="w-full py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center justify-center gap-2 mercury-btn-press"
             >
               {loading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Processing Heuristic Analysis...</span>
-                </>
+                <span>Executing Diagnostics...</span>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
-                  <span>Execute Astra Threat Diagnostics</span>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Execute Threat Diagnostics</span>
                 </>
               )}
             </button>
@@ -225,40 +222,40 @@ export function ManualAnalyzerModal({
 
           {/* Analysis Results View */}
           {analysis && (
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4 font-mono shadow-xs">
+            <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-3 font-mono">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-2">
-                  <span className={`px-2.5 py-1 rounded text-xs font-bold uppercase border ${
+                  <span className={`px-2 py-0.5 rounded text-[11px] font-semibold uppercase border tnum ${
                     analysis.severity === 'critical'
-                      ? 'bg-red-50 text-red-700 border-red-200'
+                      ? 'bg-rose-50 text-rose-700 border-rose-200'
                       : analysis.severity === 'high'
                       ? 'bg-amber-50 text-amber-800 border-amber-200'
-                      : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                   }`}>
-                    {analysis.severity} Risk
+                    {analysis.severity}
                   </span>
-                  <span className="text-sm font-bold text-slate-900">
+                  <span className="text-xs font-bold text-slate-900 tnum">
                     Score: {analysis.riskScore}/100
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs">
-                  <span className="text-slate-600 font-medium">Impersonation: <strong className="text-amber-800">{analysis.impersonationScore}%</strong></span>
-                  <span className="text-slate-600 font-medium">Fake Probability: <strong className="text-red-700">{analysis.fakeAccountProbability}%</strong></span>
+                <div className="flex items-center gap-3 text-xs tnum">
+                  <span className="text-slate-600">Impersonation: <strong className="text-amber-800">{analysis.impersonationScore}%</strong></span>
+                  <span className="text-slate-600">Fake Probability: <strong className="text-rose-600">{analysis.fakeAccountProbability}%</strong></span>
                 </div>
               </div>
 
-              <div className="text-xs text-slate-700 font-medium">
+              <div className="text-xs text-slate-700 font-sans">
                 {analysis.summary}
               </div>
 
               {/* Matched Indicators */}
               <div className="space-y-2">
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Signals Triggered:</div>
+                <div className="text-[10px] text-slate-400 uppercase font-semibold">Signals Triggered:</div>
                 {analysis.indicators.map((ind, i) => (
-                  <div key={i} className="p-3 rounded-xl bg-white border border-slate-200 text-xs space-y-1 shadow-2xs">
-                    <div className="text-cyan-800 font-bold">{ind.title}</div>
-                    <div className="text-slate-600 text-[11px]">{ind.description}</div>
+                  <div key={i} className="p-2.5 rounded bg-white border border-slate-200 text-xs space-y-0.5">
+                    <div className="text-sky-700 font-semibold">{ind.title}</div>
+                    <div className="text-slate-500 text-[11px] font-sans">{ind.description}</div>
                   </div>
                 ))}
               </div>
@@ -268,10 +265,10 @@ export function ManualAnalyzerModal({
                 <div className="pt-2 border-t border-slate-200 flex justify-end">
                   <button
                     onClick={handleIngestToFeed}
-                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-xs"
+                    className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium flex items-center gap-1.5 mercury-transition mercury-btn-press"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Push to Threat Inbox Feed
+                    Push to Active Inbox
                   </button>
                 </div>
               )}

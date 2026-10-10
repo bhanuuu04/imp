@@ -8,7 +8,7 @@ import {
   Copy, 
   Check, 
   ExternalLink, 
-  CheckCircle2
+  CheckCircle2 
 } from 'lucide-react';
 
 interface TakedownDossierModalProps {
@@ -72,19 +72,19 @@ export function TakedownDossierModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
-      <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+      <div className="w-full max-w-2xl bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-4 lg:p-5 bg-red-50 border-b border-red-200 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-red-100 border border-red-300 text-red-700">
-              <ShieldAlert className="w-5 h-5" />
+        <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-md bg-rose-50 border border-rose-200 text-rose-700">
+              <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span>Automated DMCA & Impersonation Takedown Dossier</span>
+              <h2 className="text-sm font-bold text-slate-900">
+                DMCA & Impersonation Enforcement Notice
               </h2>
-              <p className="text-xs text-red-700 font-mono font-medium">
+              <p className="text-xs text-slate-500">
                 Target: @{message.sender.username} on {message.platform.toUpperCase()}
               </p>
             </div>
@@ -92,30 +92,29 @@ export function TakedownDossierModal({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition"
+            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-5 flex-1 font-mono text-xs">
+        <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs">
           {loading ? (
-            <div className="py-16 text-center text-slate-500 space-y-2">
-              <div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="font-medium text-slate-700">Compiling Legal Brand Rights Evidence & Formulating Notice...</p>
+            <div className="py-12 text-center text-slate-500 space-y-2">
+              <p className="font-medium text-slate-700">Compiling Legal Rights Evidence & Formulating Notice...</p>
             </div>
           ) : dossier ? (
             <>
               {/* Destination Abuse Portal */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+              <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <div className="text-[10px] text-slate-500 uppercase font-bold">Filing Destination</div>
-                  <div className="text-sm font-bold text-slate-900 mt-0.5">
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">Filing Destination</div>
+                  <div className="text-xs font-semibold text-slate-900 mt-0.5">
                     {dossier.destination?.policy || 'Platform Abuse Desk'}
                   </div>
-                  <div className="text-slate-600 text-[11px] font-medium mt-0.5">
-                    Direct Abuse Contact: <span className="text-cyan-700 font-bold">{dossier.destination?.email}</span>
+                  <div className="text-slate-500 text-[11px] mt-0.5">
+                    Abuse Desk: <span className="font-mono text-slate-800 font-medium">{dossier.destination?.email}</span>
                   </div>
                 </div>
 
@@ -124,67 +123,67 @@ export function TakedownDossierModal({
                     href={dossier.destination.portal}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-semibold shadow-2xs transition"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-medium transition"
                   >
-                    Open Platform Abuse Portal <ExternalLink className="w-3.5 h-3.5" />
+                    Open Platform Desk <ExternalLink className="w-3 h-3" />
                   </a>
                 )}
               </div>
 
               {/* Subject Line */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-slate-600 font-semibold">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-slate-600 font-medium">
                   <span>Formal Notice Subject Line</span>
                   <button
                     onClick={() => copyToClipboard(dossier.subject, 'subject')}
-                    className="text-cyan-700 hover:underline flex items-center gap-1"
+                    className="text-sky-600 hover:underline flex items-center gap-1"
                   >
-                    {copiedSubject ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedSubject ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
                     {copiedSubject ? 'Copied' : 'Copy Subject'}
                   </button>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 select-all font-sans font-medium">
+                <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 text-slate-900 select-all font-sans font-medium">
                   {dossier.subject}
                 </div>
               </div>
 
               {/* Notice Body */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-slate-600 font-semibold">
-                  <span>Structured Legal Notice & Threat Forensics Proof</span>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-slate-600 font-medium">
+                  <span>Structured Legal Notice & Proof</span>
                   <button
                     onClick={() => copyToClipboard(dossier.bodyText, 'body')}
-                    className="text-cyan-700 hover:underline flex items-center gap-1"
+                    className="text-sky-600 hover:underline flex items-center gap-1"
                   >
-                    {copiedBody ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                    {copiedBody ? 'Copied' : 'Copy Notice Text'}
+                    {copiedBody ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedBody ? 'Copied' : 'Copy Notice'}
                   </button>
                 </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 whitespace-pre-wrap select-all max-h-72 overflow-y-auto leading-relaxed font-mono">
+                <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 text-slate-800 whitespace-pre-wrap select-all max-h-64 overflow-y-auto leading-relaxed font-mono text-[11px]">
                   {dossier.bodyText}
                 </div>
               </div>
             </>
           ) : (
-            <div className="text-red-600 font-bold">Failed to generate takedown notice.</div>
+            <div className="text-rose-600 font-medium">Failed to generate takedown notice.</div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+        <div className="p-3.5 bg-slate-50/70 border-t border-slate-200 flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-mono font-semibold hover:bg-slate-100 transition shadow-2xs"
+            className="px-3.5 py-1.5 rounded-md bg-white border border-slate-200 text-slate-700 text-xs font-medium hover:bg-slate-50 transition"
           >
             Cancel
           </button>
 
           <button
             onClick={handleApplyAndFile}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-xs transition"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium transition mercury-btn-press"
           >
-            <CheckCircle2 className="w-4 h-4" />
-            Mark Filed & Update Incident Status
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Mark Dispatched & Update Case
           </button>
         </div>
       </div>

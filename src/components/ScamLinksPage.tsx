@@ -88,63 +88,43 @@ export function ScamLinksPage({ onOpenTakedown }: ScamLinksPageProps) {
       url: urlScannerInput,
       domain: 'acme-security-verify.top',
       tld: '.top (High Risk TLD)',
-      verdict: 'CONFIRMED PHISHING',
-      riskScore: 99,
-      ip: '194.26.29.114',
+      riskScore: 97,
       indicators: [
-        'Domain mimics brand name "Acme" with unauthorized security keywords',
-        'Hosted on high-abuse bulletproof hosting subnet',
-        'Fake login form harvesting passwords and 2FA tokens'
+        'Domain registered 3 days ago',
+        'Stolen logo favicon hash matched',
+        'Credential harvesting POST endpoint active',
+        'No valid SPF/DKIM verification'
       ]
     });
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#F8FAFC] p-6 lg:p-8 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-8 space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Scam Links & Phishing Radar</h1>
-        <p className="text-xs text-slate-500 mt-0.5">
-          Real-time tracking of lookalike phishing domains, deceptive shorteners, and credential harvesting landing pages
+      <div className="pb-2 border-b border-slate-200">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
+          <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase font-mono">
+            Phishing & Scam Link Interceptor
+          </span>
+        </div>
+        <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+          Scam Links & Malicious Domains
+        </h1>
+        <p className="text-xs text-slate-500 mt-1">
+          De-obfuscate shortened URLs, verify SSL certificate provenance, and automatically issue registrar abuse suspensions.
         </p>
       </div>
 
-      {/* Top 4 Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-slate-500">Scam Links Flagged</div>
-          <div className="text-2xl font-black text-slate-900 mt-1">71</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-1">↓ 41% vs last month</div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-5 border border-red-200 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-red-600 font-semibold">Active Phishing Portals</div>
-          <div className="text-2xl font-black text-red-600 mt-1">19</div>
-          <div className="text-[11px] text-red-500 font-medium mt-1">Immediate takedown required</div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-slate-500">Masked URL Shorteners</div>
-          <div className="text-2xl font-black text-slate-900 mt-1">31</div>
-          <div className="text-[11px] text-slate-400 mt-1">bit.ly, t.co, tinyurl</div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-emerald-600 font-semibold">Neutralized Links</div>
-          <div className="text-2xl font-black text-emerald-600 mt-1">52</div>
-          <div className="text-[11px] text-emerald-600 font-medium mt-1">Reported to Safe Browsing</div>
-        </div>
-      </div>
-
-      {/* URL Forensic Scanner Sandbox */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-4">
+      {/* Live URL Forensics Bar */}
+      <div className="mercury-card p-6 space-y-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Globe className="w-5 h-5 text-indigo-600" />
-            Live URL & Redirect Chain Inspector
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <Globe className="w-4 h-4 text-sky-600" />
+            Live URL Forensics & Safe-Browsing Lookup
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Analyze any suspicious link found in social DMs or comments to trace unshortened destinations and phishing kits
+            Test any suspicious link extracted from DMs or comments to reveal redirects, host IP, and registrar abuse desks.
           </p>
         </div>
 
@@ -153,95 +133,90 @@ export function ScamLinksPage({ onOpenTakedown }: ScamLinksPageProps) {
             type="text"
             value={urlScannerInput}
             onChange={(e) => setUrlScannerInput(e.target.value)}
-            placeholder="https://suspected-phishing-link.com"
-            className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white"
+            placeholder="https://..."
+            className="flex-1 bg-white border border-slate-200 rounded-md px-3.5 py-2 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+            className="px-4 py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1.5 mercury-btn-press"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            Inspect URL
+            Scan Payload
           </button>
         </form>
 
         {scanResult && (
-          <div className="p-4 rounded-xl bg-red-50/60 border border-red-200 text-xs font-mono space-y-2">
+          <div className="p-4 rounded-md bg-slate-50 border border-slate-200 text-xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-red-700">{scanResult.verdict} (Risk: {scanResult.riskScore}/100)</span>
-              <span className="text-slate-500">IP: {scanResult.ip}</span>
+              <span className="font-semibold text-rose-600 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4" />
+                Confirmed Malicious Phishing Endpoint (Score: {scanResult.riskScore}/100)
+              </span>
+              <span className="font-mono text-slate-500 text-[11px]">{scanResult.tld}</span>
             </div>
-            <div className="text-slate-700 font-medium">TLD: {scanResult.tld}</div>
-            <div className="space-y-1">
-              {scanResult.indicators.map((ind: string, i: number) => (
-                <div key={i} className="text-red-700 text-[11px] flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-600 shrink-0" />
-                  <span>{ind}</span>
-                </div>
+            <ul className="list-disc pl-4 text-slate-600 space-y-1">
+              {scanResult.indicators.map((ind: string, idx: number) => (
+                <li key={idx}>{ind}</li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
       </div>
 
-      {/* Flagged Scam Links Table */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-        <h2 className="text-base font-bold text-slate-900 mb-4">Active Malicious Links & Campaigns</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-slate-100 text-slate-400 font-medium">
-                <th className="pb-3 font-medium">URL & Domain</th>
-                <th className="pb-3 font-medium">Campaign Type</th>
-                <th className="pb-3 font-medium">Vector</th>
-                <th className="pb-3 font-medium">Host / Registrar</th>
-                <th className="pb-3 font-medium">Risk</th>
-                <th className="pb-3 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {scamLinks.map((sl) => (
-                <tr key={sl.id} className="hover:bg-slate-50/70 transition">
-                  <td className="py-3.5 pr-3 max-w-[220px]">
-                    <div className="font-bold text-slate-900 font-mono truncate">{sl.domain}</div>
-                    <div className="text-[11px] text-slate-400 font-mono truncate flex items-center gap-1">
-                      <span>{sl.url}</span>
-                      <button onClick={() => copyUrl(sl.url, sl.id)} className="text-slate-400 hover:text-slate-700">
-                        {copiedId === sl.id ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                      </button>
-                    </div>
-                  </td>
-
-                  <td className="py-3.5 pr-3 text-slate-700 font-medium">
-                    {sl.campaignType}
-                  </td>
-
-                  <td className="py-3.5 pr-3 text-slate-500">
-                    {sl.threatVector}
-                  </td>
-
-                  <td className="py-3.5 pr-3 text-slate-500 font-mono text-[11px]">
-                    {sl.registrar}
-                  </td>
-
-                  <td className="py-3.5 pr-3 whitespace-nowrap">
-                    <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-red-600 border border-red-200">
-                      {sl.riskScore}/100
+      {/* Flagged Links Feed */}
+      <div>
+        <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">
+          Intercepted Malicious URLs ({scamLinks.length})
+        </h2>
+        <div className="space-y-3">
+          {scamLinks.map((link) => (
+            <div
+              key={link.id}
+              className="mercury-card p-5 space-y-3 hover:border-slate-300 mercury-transition"
+            >
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-mono text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
+                      {link.status}
                     </span>
-                  </td>
+                    <span className="text-sm font-semibold text-slate-900 font-mono">
+                      {link.domain}
+                    </span>
+                    <span className="text-xs text-slate-400 font-mono">
+                      IP: {link.ipAddress}
+                    </span>
+                  </div>
 
-                  <td className="py-3.5 text-right whitespace-nowrap">
-                    <button
-                      onClick={() => onOpenTakedown(sl)}
-                      className="px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold transition"
-                    >
-                      Takedown URL
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  <div className="text-xs text-slate-600">
+                    <strong className="text-slate-700">{link.campaignType}</strong> • Vector: {link.threatVector}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => copyUrl(link.url, link.id)}
+                    className="px-3 py-1.5 rounded-md bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium mercury-transition flex items-center gap-1"
+                  >
+                    {copiedId === link.id ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    Copy URL
+                  </button>
+
+                  <button
+                    onClick={() => onOpenTakedown(link)}
+                    className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1 mercury-btn-press"
+                  >
+                    File Takedown <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="text-xs font-mono text-slate-400 pt-2 border-t border-slate-100 flex justify-between items-center">
+                <span>Registrar: {link.registrar}</span>
+                <span className="tnum">First seen: {link.firstSeen}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

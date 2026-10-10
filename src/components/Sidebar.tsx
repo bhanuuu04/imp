@@ -4,7 +4,7 @@ import React from 'react';
 import { 
   Home, 
   Bell, 
-  CheckCircle, 
+  CheckCircle2, 
   Grid, 
   Compass, 
   Share2, 
@@ -14,11 +14,9 @@ import {
   Layers, 
   Users, 
   Settings, 
-  Sparkles, 
   ArrowRight,
-  ShieldAlert,
-  Smartphone,
-  Link as LinkIcon
+  Shield,
+  Lock
 } from 'lucide-react';
 
 export type MainNavTab = 
@@ -49,7 +47,7 @@ export function Sidebar({
   const menuItems = [
     { id: 'overview' as MainNavTab, label: 'Overview', icon: Home },
     { id: 'threats' as MainNavTab, label: 'Threats', icon: Bell, badge: `${threatsCount}` },
-    { id: 'impersonation' as MainNavTab, label: 'Impersonation', icon: CheckCircle },
+    { id: 'impersonation' as MainNavTab, label: 'Impersonation', icon: CheckCircle2 },
     { id: 'fake_apps' as MainNavTab, label: 'Fake Apps', icon: Grid },
     { id: 'scam_links' as MainNavTab, label: 'Scam Links', icon: Compass },
     { id: 'social_monitoring' as MainNavTab, label: 'Social Monitoring', icon: Share2 },
@@ -62,22 +60,25 @@ export function Sidebar({
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-200/80 bg-white flex flex-col justify-between shrink-0 h-full overflow-y-auto select-none">
+    <aside className="w-60 border-r border-slate-200/90 bg-white flex flex-col justify-between shrink-0 h-full overflow-y-auto select-none">
       <div className="p-4 space-y-6">
-        {/* Logo Section */}
+        {/* Minimal Astra Brand Logo */}
         <div className="px-2 py-1 flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-xs">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-              <path d="M12 3L3 20H8.5L12 12.5L15.5 20H21L12 3Z" fill="white" />
-            </svg>
+          <div className="w-8 h-8 rounded-lg bg-[#0284c7] flex items-center justify-center text-white shadow-xs">
+            <Shield className="w-4 h-4 fill-white/20 text-white" strokeWidth={2} />
           </div>
-          <span className="text-xl font-black text-slate-900 tracking-tight">
-            Astra
-          </span>
+          <div>
+            <div className="text-base font-bold text-slate-900 tracking-tight leading-none">
+              Astra
+            </div>
+            <div className="text-[10px] text-slate-400 font-medium tracking-wide uppercase mt-0.5">
+              Brand Defense
+            </div>
+          </div>
         </div>
 
-        {/* Menu Items */}
-        <nav className="space-y-1">
+        {/* Navigation List */}
+        <nav className="space-y-0.5">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -85,19 +86,24 @@ export function Sidebar({
               <button
                 key={item.id}
                 onClick={() => onSelectTab(item.id)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition group ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 group ${
                   isActive
-                    ? 'bg-[#EEF2FF] text-[#4F46E5] font-semibold'
+                    ? 'bg-[#e0f2fe]/60 text-[#0284c7] font-semibold'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 transition ${isActive ? 'text-[#4F46E5]' : 'text-slate-500 group-hover:text-slate-700'}`} />
+                <div className="flex items-center gap-2.5">
+                  <Icon 
+                    className={`w-4 h-4 transition-colors ${
+                      isActive ? 'text-[#0284c7]' : 'text-slate-400 group-hover:text-slate-600'
+                    }`} 
+                    strokeWidth={1.5}
+                  />
                   <span>{item.label}</span>
                 </div>
 
                 {item.badge && (
-                  <span className="w-5 h-5 rounded-full bg-red-500 text-white text-[11px] font-bold flex items-center justify-center font-mono">
+                  <span className="px-1.5 py-0.2 rounded-full bg-red-50 text-red-600 border border-red-200/80 text-[10px] font-bold font-mono tnum">
                     {item.badge}
                   </span>
                 )}
@@ -107,21 +113,26 @@ export function Sidebar({
         </nav>
       </div>
 
-      {/* Bottom Astra Pro Upgrade Card */}
+      {/* Bottom Virtual Card / Enterprise Protection Module */}
       <div className="p-4">
-        <div className="p-4 rounded-2xl bg-gradient-to-b from-indigo-50/70 to-purple-50/50 border border-indigo-100/80 space-y-2.5">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-indigo-600" />
-            <span className="text-xs font-bold text-slate-900">Astra Pro</span>
+        <div className="p-3.5 rounded-xl bg-[#f8fafc] border border-slate-200 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold text-slate-800 flex items-center gap-1.5">
+              <Lock className="w-3.5 h-3.5 text-[#0284c7]" strokeWidth={1.5} />
+              Enterprise Tier
+            </span>
+            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
+              ACTIVE
+            </span>
           </div>
           <p className="text-[11px] text-slate-500 leading-relaxed">
-            Unlock advanced monitoring and faster takedowns.
+            Automated platform takedowns & 24/7 darknet brand surveillance.
           </p>
           <button
             onClick={() => onSelectTab('settings')}
-            className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition active:scale-95"
+            className="w-full py-1.5 px-3 rounded-lg bg-[#0284c7] hover:bg-[#0369a1] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition duration-150 active:scale-97 shadow-2xs"
           >
-            <span>Upgrade</span>
+            <span>Manage Defense</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

@@ -32,7 +32,7 @@ export function TakedownsPage({ onOpenNewTakedown }: TakedownsPageProps) {
       submittedAt: 'Today, 10:14 AM',
       eta: '1-3 hours',
       status: 'In Review',
-      statusColor: 'bg-amber-50 text-amber-700 border-amber-200',
+      statusColor: 'bg-amber-50 text-amber-800 border-amber-200',
       caseNumber: '#META-992140'
     },
     {
@@ -68,112 +68,111 @@ export function TakedownsPage({ onOpenNewTakedown }: TakedownsPageProps) {
       submittedAt: '2 days ago',
       eta: 'Under Review',
       status: 'Scam Flag Applied',
-      statusColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+      statusColor: 'bg-sky-50 text-sky-700 border-sky-200',
       caseNumber: '#TG-1192'
     }
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#F8FAFC] p-6 lg:p-8 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-8 space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Takedown Management</h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Track and expedite DMCA legal notices, platform abuse reports, and registrar takedowns
+          <div className="flex items-center gap-2 mb-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
+            <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase font-mono">
+              Enforcement & Legal Dispatch
+            </span>
+          </div>
+          <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+            Takedown Management
+          </h1>
+          <p className="text-xs text-slate-500 mt-1">
+            Monitor and expedite DMCA statutory notices, registrar abuse suspensions, and app store takedowns.
           </p>
         </div>
 
         <button
           onClick={onOpenNewTakedown}
-          className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+          className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1.5 mercury-btn-press"
         >
-          <Plus className="w-3.5 h-3.5" />
-          File New Takedown Dossier
+          <Plus className="w-4 h-4" />
+          Dispatch New Notice
         </button>
       </div>
 
-      {/* Top Stats */}
+      {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-slate-500">Total Takedowns Filed</div>
-          <div className="text-2xl font-black text-slate-900 mt-1">142</div>
-          <div className="text-[11px] text-slate-400 mt-1">Across 18 platforms</div>
+        <div className="mercury-card p-5">
+          <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Active Legal Notices</div>
+          <div className="text-2xl font-bold text-slate-900 mt-1 tnum">12</div>
+          <div className="text-[11px] text-slate-400 mt-1">Under formal review</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-amber-200 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-amber-700 font-semibold">In Active Review</div>
-          <div className="text-2xl font-black text-amber-600 mt-1">8</div>
-          <div className="text-[11px] text-amber-600 font-medium mt-1">Avg 2.4 hrs response</div>
+        <div className="mercury-card p-5">
+          <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Enforcement SLA Avg</div>
+          <div className="text-2xl font-bold text-sky-600 mt-1 tnum">2.4h</div>
+          <div className="text-[11px] text-emerald-600 font-medium mt-1">↓ 42% vs industry standard</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-emerald-600 font-semibold">Takedown Success Rate</div>
-          <div className="text-2xl font-black text-emerald-600 mt-1">96.4%</div>
-          <div className="text-[11px] text-emerald-600 font-medium mt-1">137 confirmed removals</div>
+        <div className="mercury-card p-5">
+          <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Completed Takedowns</div>
+          <div className="text-2xl font-bold text-emerald-600 mt-1 tnum">84</div>
+          <div className="text-[11px] text-slate-400 mt-1">Profiles and APKs terminated</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="text-xs font-medium text-slate-500">Mean Time to Removal</div>
-          <div className="text-2xl font-black text-indigo-600 mt-1">3.8 hrs</div>
-          <div className="text-[11px] text-indigo-500 font-medium mt-1">Automated evidence dossiers</div>
+        <div className="mercury-card p-5">
+          <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Host Injunction Rate</div>
+          <div className="text-2xl font-bold text-slate-900 mt-1 tnum">98.1%</div>
+          <div className="text-[11px] text-slate-400 mt-1">Legally binding enforcement</div>
         </div>
       </div>
 
-      {/* Takedowns Table */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-        <h2 className="text-base font-bold text-slate-900 mb-4">Active & Recent Takedown Requests</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-slate-100 text-slate-400 font-medium">
-                <th className="pb-3 font-medium">Case & Target</th>
-                <th className="pb-3 font-medium">Target Type</th>
-                <th className="pb-3 font-medium">Destination Desk</th>
-                <th className="pb-3 font-medium">Status</th>
-                <th className="pb-3 font-medium">Submitted</th>
-                <th className="pb-3 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {takedownsList.map((tk) => (
-                <tr key={tk.id} className="hover:bg-slate-50/70 transition">
-                  <td className="py-3.5 pr-3">
-                    <div className="font-bold text-slate-900 font-mono">{tk.caseNumber}</div>
-                    <div className="text-slate-600 font-medium mt-0.5">{tk.target}</div>
-                  </td>
+      {/* Takedown Records Table */}
+      <div className="mercury-card overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-slate-200 bg-slate-50/60 flex items-center justify-between">
+          <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
+            Active Case Records ({takedownsList.length})
+          </span>
+          <span className="text-xs text-slate-400 font-mono">
+            Automated Escalation Active
+          </span>
+        </div>
 
-                  <td className="py-3.5 pr-3 text-slate-700 font-medium">
-                    {tk.targetType}
-                  </td>
+        <div className="divide-y divide-slate-100">
+          {takedownsList.map((tk) => (
+            <div key={tk.id} className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 mercury-transition">
+              <div className="space-y-1.5 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">
+                    {tk.id}
+                  </span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    {tk.target}
+                  </span>
+                  <span className="text-[11px] text-slate-400 font-mono">
+                    {tk.caseNumber}
+                  </span>
+                  <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded border ${tk.statusColor}`}>
+                    {tk.status}
+                  </span>
+                </div>
 
-                  <td className="py-3.5 pr-3 text-slate-500 font-mono text-[11px]">
-                    <div>{tk.destination}</div>
-                    <div className="text-slate-400 text-[10px]">{tk.policy}</div>
-                  </td>
+                <div className="text-xs text-slate-500 flex items-center gap-4 flex-wrap">
+                  <span>Enforcing Against: <strong className="text-slate-700">{tk.destination}</strong></span>
+                  <span>Policy: <span className="text-slate-600">{tk.policy}</span></span>
+                  <span className="font-mono tnum">ETA: {tk.eta}</span>
+                </div>
+              </div>
 
-                  <td className="py-3.5 pr-3 whitespace-nowrap">
-                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${tk.statusColor}`}>
-                      {tk.status}
-                    </span>
-                  </td>
-
-                  <td className="py-3.5 pr-3 text-slate-500 whitespace-nowrap text-[11px]">
-                    {tk.submittedAt}
-                  </td>
-
-                  <td className="py-3.5 text-right whitespace-nowrap">
-                    <button
-                      onClick={() => {}}
-                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition"
-                    >
-                      View Dossier
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              <div className="flex items-center gap-2 shrink-0 self-end md:self-auto">
+                <button className="px-3 py-1.5 rounded-md bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium mercury-transition flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-slate-400" />
+                  View Dossier
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
