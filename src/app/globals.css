@@ -1,16 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-subtle: #f1f5f9;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --accent: #0284c7;
-  --accent-hover: #0369a1;
-  --accent-soft: #e0f2fe;
-  --text-primary: #0f172a;
-  --text-muted: #64748b;
+  --bg: #030712;
+  --surface: #111827;
+  --border: #1f2937;
+  --accent: #38bdf8;
+  --accent-hover: #0284c7;
+  --accent-glow: rgba(56, 189, 248, 0.15);
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
@@ -26,37 +24,74 @@
 }
 
 body {
-  background: var(--bg);
-  color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #030712;
+  color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Tabular numeric alignment for metrics & telemetry */
+/* Tabular numeric alignment */
 .tnum, [data-tnum="true"] {
   font-feature-settings: "tnum" 1;
   font-variant-numeric: tabular-nums;
 }
 
-/* Mercury signature micro-interactions */
-.mercury-transition {
+/* Pulumi Theme #132 Card Architecture */
+.pulumi-card {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
   transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mercury-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
-  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mercury-card:hover {
+.pulumi-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
+  border-color: #374151;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(56, 189, 248, 0.1);
 }
 
-.mercury-btn-press:active {
+/* Terminal Hub Windows with Hairline Borders */
+.terminal-window {
+  background-color: #030712;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Button Micro-Interactions */
+.pulumi-btn-primary {
+  background-color: #38bdf8;
+  color: #030712;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pulumi-btn-primary:hover {
+  background-color: #7dd3fc;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.pulumi-btn-primary:active {
+  transform: scale(0.97);
+  transition: transform 80ms ease-in;
+}
+
+.pulumi-btn-secondary {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  color: #f8fafc;
+  border-radius: 8px;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pulumi-btn-secondary:hover {
+  border-color: #374151;
+  background-color: #1f2937;
+}
+
+.pulumi-btn-secondary:active {
   transform: scale(0.97);
   transition: transform 80ms ease-in;
 }

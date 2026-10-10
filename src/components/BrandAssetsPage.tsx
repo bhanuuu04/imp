@@ -12,7 +12,9 @@ import {
   ExternalLink, 
   Trash2, 
   CheckCircle2, 
-  ShieldCheck 
+  ShieldCheck,
+  Terminal,
+  Code2
 } from 'lucide-react';
 import { BrandAssetRegistry } from '@/types/threat';
 
@@ -56,81 +58,81 @@ export function BrandAssetsPage({
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-8 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-[#030712] p-6 lg:p-8 space-y-6 font-mono">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#1f2937]">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
-            <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase font-mono">
-              Ground Truth Whitelist
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
+            <span className="text-[11px] font-semibold text-[#38bdf8] tracking-wider uppercase">
+              Brand Ground Truth Manifest
             </span>
           </div>
-          <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#f8fafc]">
             Brand Assets & Identity Registry
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Define authorized corporate domains, official bundle IDs, and VIP handles to calibrate AI threat heuristics.
+          <p className="text-xs text-[#94a3b8] mt-1 font-sans">
+            Declare authorized corporate domains, official bundle IDs, and VIP handles to calibrate AI threat heuristics.
           </p>
         </div>
 
         <button
           onClick={handleSaveAll}
-          className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1.5 mercury-btn-press"
+          className="px-3.5 py-1.5 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition flex items-center gap-1.5 active:scale-97"
         >
           {savedSuccess ? <Check className="w-3.5 h-3.5" /> : null}
-          {savedSuccess ? 'Saved' : 'Save Registry'}
+          {savedSuccess ? 'Manifest Saved' : 'Save Manifest'}
         </button>
       </div>
 
       {/* Brand Identity Card */}
-      <div className="mercury-card p-6 space-y-4">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <Building2 className="w-4 h-4 text-sky-600" />
-          Corporate & Legal Identity
+      <div className="terminal-window p-6 space-y-4">
+        <h2 className="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-[#38bdf8]" />
+          Corporate & Legal Identity Declaration
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="text-[11px] font-medium text-slate-500 mb-1 block">Brand Display Name</label>
+            <label className="text-[11px] font-medium text-[#94a3b8] mb-1 block">Brand Display Name</label>
             <input
               type="text"
               value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
+              className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
             />
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-500 mb-1 block">Registered Legal Entity</label>
+            <label className="text-[11px] font-medium text-[#94a3b8] mb-1 block">Registered Legal Entity</label>
             <input
               type="text"
               value={legalEntity}
               onChange={(e) => setLegalEntity(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
+              className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
             />
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-500 mb-1 block">Brand Security & Abuse Email</label>
+            <label className="text-[11px] font-medium text-[#94a3b8] mb-1 block">Brand Security Email</label>
             <input
               type="email"
               value={contactEmail}
               onChange={(e) => setContactEmail(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+              className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
             />
           </div>
         </div>
       </div>
 
       {/* Authorized Domains */}
-      <div className="mercury-card p-6 space-y-4">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <Globe className="w-4 h-4 text-sky-600" />
-          Whitelisted Corporate Domains
+      <div className="terminal-window p-6 space-y-4">
+        <h2 className="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+          <Globe className="w-4 h-4 text-[#38bdf8]" />
+          Whitelisted Domain Infrastructure
         </h2>
-        <p className="text-xs text-slate-500">
-          Domains listed here will never be marked as typosquats or phishing endpoints by Astra.
+        <p className="text-xs text-[#94a3b8] font-sans">
+          Domains listed here will never be flagged as typosquats or phishing endpoints by Astra.
         </p>
 
         <form onSubmit={handleAddDomain} className="flex gap-2">
@@ -139,14 +141,14 @@ export function BrandAssetsPage({
             value={newDomain}
             onChange={(e) => setNewDomain(e.target.value)}
             placeholder="e.g. acmepayments.com"
-            className="flex-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+            className="flex-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
           />
           <button
             type="submit"
-            className="px-3.5 py-1.5 rounded-md bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium mercury-transition flex items-center gap-1"
+            className="px-3.5 py-1.5 rounded-[6px] bg-[#111827] border border-[#1f2937] hover:bg-[#1f2937] text-[#94a3b8] hover:text-[#f8fafc] text-xs font-medium transition flex items-center gap-1"
           >
             <Plus className="w-3.5 h-3.5" />
-            Add Domain
+            Append Domain
           </button>
         </form>
 
@@ -154,13 +156,13 @@ export function BrandAssetsPage({
           {domains.map((dom) => (
             <span
               key={dom}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[6px] bg-[#111827] border border-[#1f2937] text-xs text-[#f8fafc]"
             >
               {dom}
               <button
                 type="button"
                 onClick={() => handleRemoveDomain(dom)}
-                className="text-slate-400 hover:text-rose-600 mercury-transition"
+                className="text-[#94a3b8] hover:text-rose-400 transition"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>

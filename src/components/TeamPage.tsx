@@ -8,7 +8,9 @@ import {
   Mail, 
   Plus, 
   CheckCircle2, 
-  Clock 
+  Clock,
+  Terminal,
+  Key
 } from 'lucide-react';
 
 export function TeamPage() {
@@ -52,67 +54,67 @@ export function TeamPage() {
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-8 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-[#030712] p-6 lg:p-8 space-y-6 font-mono">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#1f2937]">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
-            <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase font-mono">
-              Role-Based Access Governance
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
+            <span className="text-[11px] font-semibold text-[#38bdf8] tracking-wider uppercase">
+              Role-Based Access Control (RBAC)
             </span>
           </div>
-          <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#f8fafc]">
             Security Team & Authorization
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-[#94a3b8] mt-1 font-sans">
             Manage analysts authorized to triage quarantined brand messages and sign statutory DMCA requests.
           </p>
         </div>
 
-        <button className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1.5 mercury-btn-press">
+        <button className="px-3.5 py-1.5 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition flex items-center gap-1.5 active:scale-97">
           <Plus className="w-4 h-4" />
-          Invite Security Officer
+          Invite Officer
         </button>
       </div>
 
       {/* Team Roster Card */}
-      <div className="mercury-card overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-slate-200 bg-slate-50/60 flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
+      <div className="pulumi-card overflow-hidden">
+        <div className="px-5 py-3 border-b border-[#1f2937] bg-[#030712] flex items-center justify-between">
+          <span className="text-xs font-semibold text-[#f8fafc] uppercase tracking-wider">
             Active SOC Analysts ({teamMembers.length})
           </span>
-          <span className="text-xs text-slate-400 font-mono">
-            SAML 2.0 / Okta SSO Connected
+          <span className="text-xs text-[#94a3b8]">
+            SAML 2.0 / OKTA SSO ATTESTED
           </span>
         </div>
 
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-[#1f2937]">
           {teamMembers.map((member, idx) => (
-            <div key={idx} className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 mercury-transition">
+            <div key={idx} className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#111827]/80 transition">
               <div className="flex items-center gap-3.5">
                 <img
                   src={member.avatar}
                   alt={member.name}
-                  className="w-10 h-10 rounded-full object-cover border border-slate-200"
+                  className="w-10 h-10 rounded-[6px] object-cover border border-[#1f2937]"
                 />
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-slate-900">{member.name}</span>
-                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                    <span className="text-sm font-semibold text-[#f8fafc] font-sans">{member.name}</span>
+                    <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-900 px-2 py-0.5 rounded">
                       {member.status}
                     </span>
                   </div>
-                  <div className="text-xs text-slate-500 font-mono">{member.email}</div>
-                  <div className="text-xs text-slate-600 mt-0.5">
-                    <strong>{member.role}</strong> • <span className="text-slate-500">{member.accessLevel}</span>
+                  <div className="text-xs text-[#94a3b8]">{member.email}</div>
+                  <div className="text-xs text-[#94a3b8] mt-0.5">
+                    <strong className="text-[#f8fafc]">{member.role}</strong> • <span>{member.accessLevel}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-xs font-mono text-slate-400 self-end md:self-auto">
+              <div className="flex items-center gap-4 text-xs text-[#94a3b8] self-end md:self-auto">
                 <span className="tnum">Active {member.lastActive}</span>
-                <button className="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium">
+                <button className="px-2.5 py-1 rounded-[6px] bg-[#111827] border border-[#1f2937] hover:bg-[#1f2937] text-[#94a3b8] hover:text-[#f8fafc] font-medium">
                   Manage Keys
                 </button>
               </div>

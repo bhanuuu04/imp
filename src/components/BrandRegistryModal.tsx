@@ -8,7 +8,9 @@ import {
   UserCheck, 
   Plus, 
   Trash2, 
-  Check 
+  Check,
+  Terminal,
+  Code2
 } from 'lucide-react';
 
 interface BrandRegistryModalProps {
@@ -59,19 +61,19 @@ export function BrandRegistryModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
-      <div className="w-full max-w-2xl bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/80 backdrop-blur-xs animate-fade-in font-mono">
+      <div className="w-full max-w-2xl bg-[#030712] border border-[#1f2937] rounded-[8px] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-4 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700">
+            <div className="p-1.5 rounded-[4px] bg-[#030712] border border-[#1f2937] text-[#38bdf8]">
               <Building2 className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900">
-                Brand Registry & Protected Assets
+              <h2 className="text-sm font-bold text-[#f8fafc]">
+                Brand Registry & Ground Truth Manifest
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[#94a3b8] font-sans">
                 Calibrate AI heuristics with your organization&apos;s verified digital footprint.
               </p>
             </div>
@@ -79,7 +81,7 @@ export function BrandRegistryModal({
 
           <button
             onClick={onClose}
-            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+            className="p-1 rounded text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#030712] transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -90,60 +92,60 @@ export function BrandRegistryModal({
           {/* Brand Basic Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div className="space-y-1">
-              <label className="text-slate-700 font-medium">Brand Trademark / Public Name</label>
+              <label className="text-[#94a3b8] font-medium">Brand Trademark / Public Name</label>
               <input
                 type="text"
                 required
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-slate-900 focus:outline-none focus:border-sky-600"
+                className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-slate-700 font-medium">Legal Corporate Entity</label>
+              <label className="text-[#94a3b8] font-medium">Legal Corporate Entity</label>
               <input
                 type="text"
                 required
                 value={legalEntity}
                 onChange={(e) => setLegalEntity(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-slate-900 focus:outline-none focus:border-sky-600"
+                className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
               />
             </div>
 
             <div className="space-y-1 sm:col-span-2">
-              <label className="text-slate-700 font-medium">Official Domains (Comma Separated)</label>
+              <label className="text-[#94a3b8] font-medium">Official Domains (Comma Separated)</label>
               <input
                 type="text"
                 value={domainsStr}
                 onChange={(e) => setDomainsStr(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-slate-900 focus:outline-none focus:border-sky-600 font-mono"
+                className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
               />
             </div>
 
             <div className="space-y-1 sm:col-span-2">
-              <label className="text-slate-700 font-medium">SOC / Legal Abuse Email</label>
+              <label className="text-[#94a3b8] font-medium">SOC / Legal Abuse Email</label>
               <input
                 type="email"
                 required
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-slate-900 focus:outline-none focus:border-sky-600 font-mono"
+                className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
               />
             </div>
           </div>
 
           {/* Protected Leadership / VIPs */}
-          <div className="space-y-3 pt-3 border-t border-slate-200">
+          <div className="space-y-3 pt-3 border-t border-[#1f2937]">
             <div className="flex items-center justify-between">
-              <span className="text-slate-800 font-medium flex items-center gap-1.5">
-                <UserCheck className="w-3.5 h-3.5 text-sky-600" />
+              <span className="text-[#f8fafc] font-medium flex items-center gap-1.5">
+                <UserCheck className="w-3.5 h-3.5 text-[#38bdf8]" />
                 Protected Executive VIPs
               </span>
               <button
                 type="button"
                 onClick={handleAddExecutive}
-                className="text-[11px] text-sky-600 font-medium hover:underline flex items-center gap-1"
+                className="text-[11px] text-[#38bdf8] font-medium hover:underline flex items-center gap-1"
               >
                 <Plus className="w-3 h-3" /> Add Executive
               </button>
@@ -153,7 +155,7 @@ export function BrandRegistryModal({
               {executives.map((exec, idx) => (
                 <div
                   key={idx}
-                  className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"
+                  className="p-2.5 rounded-[6px] bg-[#111827] border border-[#1f2937] flex items-center justify-between gap-2"
                 >
                   <div className="grid grid-cols-2 gap-2 flex-1">
                     <input
@@ -165,7 +167,7 @@ export function BrandRegistryModal({
                         setExecutives(next);
                       }}
                       placeholder="Executive Name"
-                      className="bg-white border border-slate-200 rounded px-2.5 py-1 text-slate-900 text-xs"
+                      className="bg-[#030712] border border-[#1f2937] rounded px-2.5 py-1 text-[#f8fafc] text-xs"
                     />
                     <input
                       type="text"
@@ -176,13 +178,13 @@ export function BrandRegistryModal({
                         setExecutives(next);
                       }}
                       placeholder="Title e.g. CEO / CISO"
-                      className="bg-white border border-slate-200 rounded px-2.5 py-1 text-slate-900 text-xs"
+                      className="bg-[#030712] border border-[#1f2937] rounded px-2.5 py-1 text-[#f8fafc] text-xs"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => handleRemoveExecutive(idx)}
-                    className="text-slate-400 hover:text-rose-600 p-1"
+                    className="text-[#94a3b8] hover:text-rose-400 p-1"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -191,19 +193,19 @@ export function BrandRegistryModal({
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-slate-200">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#1f2937]">
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 py-1.5 rounded-md bg-white border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition"
+              className="px-3.5 py-1.5 rounded-[6px] bg-[#111827] border border-[#1f2937] text-[#94a3b8] hover:text-[#f8fafc] font-medium transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium transition flex items-center gap-1.5 mercury-btn-press"
+              className="px-4 py-1.5 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] font-bold transition flex items-center gap-1.5 active:scale-97"
             >
-              {savedSuccess ? <Check className="w-3.5 h-3.5 text-white" /> : null}
+              {savedSuccess ? <Check className="w-3.5 h-3.5 text-[#030712]" /> : null}
               {savedSuccess ? 'Saved' : 'Save Configuration'}
             </button>
           </div>

@@ -8,7 +8,8 @@ import {
   Bell, 
   ShieldCheck, 
   Terminal,
-  Activity
+  Activity,
+  Code2
 } from 'lucide-react';
 import { BrandAssetRegistry } from '@/types/threat';
 
@@ -36,79 +37,77 @@ export function Navbar({
   };
 
   return (
-    <header className="h-16 border-b border-slate-200/90 bg-white/90 backdrop-blur-md px-6 flex items-center justify-between gap-6 shrink-0 sticky top-0 z-30">
-      {/* Search Input (Mercury signature hairline field) */}
-      <div className="flex-1 max-w-xl relative">
-        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+    <header className="h-14 border-b border-[#1f2937] bg-[#030712]/95 backdrop-blur-md px-5 flex items-center justify-between gap-5 shrink-0 sticky top-0 z-30 font-sans">
+      {/* CLI Search Input with Hairline Border */}
+      <div className="flex-1 max-w-lg relative">
+        <Search className="w-3.5 h-3.5 text-[#94a3b8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
           value={searchValue}
           onChange={handleSearch}
-          placeholder="Search handles, domains, rogue APKs, or threats..."
-          className="w-full bg-[#f8fafc] hover:bg-slate-100/60 focus:bg-white border border-slate-200 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/15 rounded-lg pl-9 pr-12 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none transition-all duration-150"
+          placeholder="Filter IOCs, SHA256 hashes, handles, or CVE vectors..."
+          className="w-full bg-[#111827] hover:bg-[#111827]/80 focus:bg-[#111827] border border-[#1f2937] focus:border-[#38bdf8] focus:ring-1 focus:ring-[#38bdf8]/40 rounded-[6px] pl-9 pr-12 py-1.5 text-xs text-[#f8fafc] placeholder-[#94a3b8]/70 focus:outline-none transition-all font-mono"
         />
-        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-slate-400 font-mono font-medium pointer-events-none">
+        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#030712] border border-[#1f2937] text-[10px] text-[#94a3b8] font-mono pointer-events-none">
           <span>⌘</span>
           <span>K</span>
         </div>
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-3 shrink-0">
-        {/* Live Protection Status Ticker */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-mono font-medium text-emerald-800">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>SOC Armed</span>
-          <span className="text-emerald-400">•</span>
-          <span className="tnum">0ms latency</span>
+      <div className="flex items-center gap-2.5 shrink-0">
+        {/* Status Uptime Badge (Theme #132 Requirement) */}
+        <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-[6px] bg-[#111827] border border-[#1f2937] text-[11px] font-mono text-[#94a3b8]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] animate-pulse" />
+          <span className="text-[#f8fafc] font-semibold">SOC UPTIME</span>
+          <span className="text-[#38bdf8] tnum">99.99%</span>
+          <span className="text-[#1f2937]">|</span>
+          <span className="tnum">14ms CLI</span>
         </div>
 
         {/* Date Range Dropdown Button */}
         <div className="relative">
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 transition duration-150 active:scale-97">
-            <Calendar className="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
+          <button className="flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#111827] hover:bg-[#1f2937] border border-[#1f2937] text-xs font-mono text-[#94a3b8] hover:text-[#f8fafc] transition active:scale-97">
+            <Calendar className="w-3.5 h-3.5 text-[#94a3b8]" strokeWidth={1.5} />
             <span className="tnum">{selectedRange}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3 h-3 text-[#94a3b8]" />
           </button>
         </div>
 
-        {/* Diagnostic Sandbox Launcher */}
+        {/* CLI Diagnostic Sandbox Launcher */}
         <button
           onClick={onOpenManualAnalyzer}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium transition duration-150 active:scale-97"
-          title="Run Forensic Analyzer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#111827] hover:bg-[#1f2937] border border-[#1f2937] text-xs font-mono text-[#38bdf8] transition active:scale-97"
+          title="Run CLI Diagnostic Sandbox"
         >
-          <Terminal className="w-3.5 h-3.5 text-[#0284c7]" strokeWidth={1.5} />
-          <span className="hidden sm:inline">Diagnostic Lab</span>
+          <Code2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+          <span className="hidden sm:inline">astra sandbox</span>
         </button>
 
         {/* Notification Bell */}
         <button
           onClick={onOpenManualAnalyzer}
-          className="relative w-8 h-8 rounded-lg hover:bg-slate-100/80 flex items-center justify-center text-slate-600 transition duration-150"
+          className="relative w-8 h-8 rounded-[6px] bg-[#111827] hover:bg-[#1f2937] border border-[#1f2937] flex items-center justify-center text-[#94a3b8] hover:text-[#f8fafc] transition"
           title="Alerts"
         >
-          <Bell className="w-4 h-4" strokeWidth={1.5} />
+          <Bell className="w-3.5 h-3.5" strokeWidth={1.5} />
           {notificationCount > 0 && (
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white" />
+            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
           )}
         </button>
 
         {/* Brand Profile Selector */}
         <button
           onClick={onOpenBrandRegistry}
-          className="flex items-center gap-2.5 pl-2 pr-1.5 py-1 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-200"
-          title="Manage Brand Assets"
+          className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-[6px] bg-[#111827] hover:bg-[#1f2937] border border-[#1f2937] transition text-left"
         >
-          <div className="w-7 h-7 rounded-md bg-[#0284c7] text-white font-bold text-xs flex items-center justify-center shadow-xs">
-            {brand.brandName.charAt(0) || 'A'}
+          <div className="w-5 h-5 rounded-[4px] bg-[#38bdf8]/15 border border-[#38bdf8]/40 flex items-center justify-center text-[10px] font-bold text-[#38bdf8] font-mono">
+            {brand.brandName.slice(0, 2).toUpperCase()}
           </div>
-          <div className="text-left hidden sm:block">
-            <div className="text-xs font-bold text-slate-900 leading-tight">
-              {brand.brandName || 'Acme Brand'}
-            </div>
-          </div>
-          <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-xs font-mono text-[#f8fafc] max-w-[120px] truncate hidden md:inline">
+            {brand.brandName}
+          </span>
+          <ChevronDown className="w-3 h-3 text-[#94a3b8]" />
         </button>
       </div>
     </header>

@@ -9,14 +9,18 @@ import {
   ArrowRight, 
   ChevronDown, 
   Globe, 
-  Smartphone,
-  CheckCircle2,
-  Lock,
-  Radio,
-  Fingerprint,
-  Zap,
-  ExternalLink,
-  ShieldCheck
+  Smartphone, 
+  CheckCircle2, 
+  Lock, 
+  Radio, 
+  Fingerprint, 
+  Zap, 
+  ExternalLink, 
+  ShieldCheck,
+  Terminal,
+  Code2,
+  Copy,
+  Check
 } from 'lucide-react';
 
 const InstagramIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
@@ -52,6 +56,8 @@ export function OverviewDashboard({
   onNavigateToTab
 }: OverviewDashboardProps) {
   const [threatTimeFilter, setThreatTimeFilter] = useState('All Threat Types');
+  const [activeCliTab, setActiveCliTab] = useState<'cli' | 'python' | 'webhook'>('cli');
+  const [copiedSnippet, setCopiedSnippet] = useState(false);
 
   const recentThreats = [
     {
@@ -59,10 +65,10 @@ export function OverviewDashboard({
       type: 'Fake Profile',
       typeIcon: 'mask',
       title: '@acme.supportt',
-      subtitle: 'Impersonating official support',
+      subtitle: 'Homoglyph handle impersonating official support',
       source: 'instagram',
-      risk: 'High',
-      riskColor: 'bg-red-50 text-red-600 border-red-200',
+      risk: 'Critical',
+      riskColor: 'bg-rose-950/60 text-rose-400 border-rose-900',
       time: '2 hours ago',
       platformIcon: 'instagram'
     },
@@ -71,10 +77,10 @@ export function OverviewDashboard({
       type: 'Scam Link',
       typeIcon: 'link',
       title: 'acme-offer.com',
-      subtitle: 'Phishing campaign',
+      subtitle: 'Credential harvesting phishing payload',
       source: 'x_twitter',
       risk: 'High',
-      riskColor: 'bg-red-50 text-red-600 border-red-200',
+      riskColor: 'bg-amber-950/60 text-amber-400 border-amber-900',
       time: '4 hours ago',
       platformIcon: 'x_twitter'
     },
@@ -83,10 +89,10 @@ export function OverviewDashboard({
       type: 'Fake App',
       typeIcon: 'package',
       title: 'Acme Wallet Pro',
-      subtitle: 'Malicious Android app',
+      subtitle: 'Trojanized APK distributing rogue keylogger',
       source: 'playstore',
-      risk: 'High',
-      riskColor: 'bg-red-50 text-red-600 border-red-200',
+      risk: 'Critical',
+      riskColor: 'bg-rose-950/60 text-rose-400 border-rose-900',
       time: '6 hours ago',
       platformIcon: 'playstore'
     },
@@ -95,10 +101,10 @@ export function OverviewDashboard({
       type: 'Fake Profile',
       typeIcon: 'mask',
       title: 'Acme Global',
-      subtitle: 'Using similar logo and name',
+      subtitle: 'Stolen brand copyright assets in display metadata',
       source: 'facebook',
       risk: 'Medium',
-      riskColor: 'bg-amber-50 text-amber-700 border-amber-200',
+      riskColor: 'bg-slate-800 text-slate-300 border-slate-700',
       time: '8 hours ago',
       platformIcon: 'facebook'
     },
@@ -107,142 +113,235 @@ export function OverviewDashboard({
       type: 'Scam Link',
       typeIcon: 'link',
       title: 'acme-giveaway.net',
-      subtitle: 'Fake reward campaign',
+      subtitle: 'Crypto wallet drainer contract redirect',
       source: 'tiktok',
-      risk: 'Medium',
-      riskColor: 'bg-amber-50 text-amber-700 border-amber-200',
+      risk: 'High',
+      riskColor: 'bg-amber-950/60 text-amber-400 border-amber-900',
       time: '12 hours ago',
       platformIcon: 'tiktok'
     }
   ];
 
+  const copyCode = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedSnippet(true);
+    setTimeout(() => setCopiedSnippet(false), 2000);
+  };
+
+  const codeSnippets = {
+    cli: `$ npm i -g @astra/secops
+$ astra connect --platform x_twitter --webhook https://astra.sh/wh
+✓ Registered 248 social hooks
+✓ Real-time AI threat stream established`,
+    python: `from astra_secops import ThreatEngine, ChannelConnector
+
+engine = ThreatEngine(model="astra-forensics-v3")
+connector = ChannelConnector(platform="instagram")
+
+@connector.on_inbound_dm
+def inspect_payload(msg):
+    verdict = engine.analyze(msg.content, msg.sender)
+    if verdict.is_critical:
+        engine.airgap_quarantine(msg.id)
+        engine.dispatch_dmca_takedown(target=msg.sender.handle)`,
+    webhook: `POST /api/webhooks/x_twitter HTTP/1.1
+Host: api.astra.security
+X-Astra-Signature: sha256=9f83...2ec4
+Content-Type: application/json
+
+{
+  "event": "direct_message_received",
+  "sender": { "handle": "acme.supportt", "verified": false },
+  "payload": "Download security update: https://apk-mirror.top/app.apk"
+}`
+  };
+
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-10 space-y-8">
-      {/* Live Financial Metric Ticker (Theme #166 Signature Requirement) */}
-      <div className="flex items-center justify-between px-4 py-2 rounded-lg bg-white border border-slate-200 shadow-2xs text-xs font-mono text-slate-600">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-semibold text-slate-900">Live Brand Telemetry</span>
-          <span className="text-slate-300">|</span>
-          <span className="tnum">248 Inbound Handles Monitored</span>
-          <span className="text-slate-300">|</span>
-          <span className="tnum">18ms API Handshake</span>
+    <div className="flex-1 overflow-y-auto bg-[#030712] p-6 lg:p-10 space-y-8 font-sans">
+      {/* Live System Uptime Ticker Bar (Theme #132 Signature Element) */}
+      <div className="flex items-center justify-between px-4 py-2.5 rounded-[8px] bg-[#111827] border border-[#1f2937] text-xs font-mono text-[#94a3b8]">
+        <div className="flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
+          <span className="font-semibold text-[#f8fafc]">SYSTEM METRICS</span>
+          <span className="text-[#1f2937]">|</span>
+          <span className="tnum">248 Inbound Handles Active</span>
+          <span className="text-[#1f2937]">|</span>
+          <span className="tnum">14ms Engine Latency</span>
         </div>
-        <div className="hidden sm:flex items-center gap-3 text-slate-500">
-          <span className="text-emerald-600 font-semibold tnum">99.99% SOC Uptime</span>
-          <span className="text-slate-300">•</span>
-          <span>Regulatory Compliance ISO-27001</span>
+        <div className="hidden sm:flex items-center gap-3 text-[#94a3b8]">
+          <span className="text-[#38bdf8] font-semibold tnum">99.99% SOC UPTIME</span>
+          <span className="text-[#1f2937]">|</span>
+          <span>ISO-27001 SECURED</span>
         </div>
       </div>
 
-      {/* Hero Section: Mercury Clean Editorial Canvas with Virtual Security Badge */}
+      {/* Hero Section: Monospace Minimalist CLI Hub (Pulumi Theme #132 DNA) */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-2">
         <div className="max-w-xl">
-          <div className="text-xs font-semibold uppercase tracking-wider text-[#0284c7] font-mono mb-2">
-            Automated Brand Protection & Threat Intelligence
+          <div className="text-xs font-mono font-semibold uppercase tracking-wider text-[#38bdf8] mb-2">
+            Infrastructure as Code For Brand Defense
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-[1.15]">
-            Your brand, defended with <span className="text-[#0284c7]">banking-grade</span> precision.
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#f8fafc] tracking-tight leading-[1.12]">
+            Declare brand security like code. Defend in real time.
           </h1>
-          <p className="text-base text-slate-500 mt-3 leading-relaxed">
-            Continuous reconnaissance against social impersonators, counterfeit mobile APKs, and phishing domains across every channel.
+          <p className="text-base text-[#94a3b8] mt-3 leading-relaxed">
+            Continuously intercept social impersonators, malicious APK mirrors, and credential-harvesting phishing networks with developer-first precision.
           </p>
-          <div className="flex items-center gap-3 mt-6">
+          <div className="flex items-center gap-3 mt-6 font-mono">
             <button
               onClick={() => onNavigateToTab('threats')}
-              className="px-5 py-2.5 rounded-lg bg-[#0284c7] hover:bg-[#0369a1] text-white text-xs font-bold transition duration-150 active:scale-97 shadow-xs flex items-center gap-2"
+              className="px-5 py-2.5 rounded-[8px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition duration-150 active:scale-97 shadow-xs flex items-center gap-2"
             >
-              <span>Inspect Active Queue</span>
+              <span>Inspect Threat Queue</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => onNavigateToTab('impersonation')}
-              className="px-5 py-2.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold transition duration-150 active:scale-97"
+              className="px-5 py-2.5 rounded-[8px] bg-[#111827] hover:bg-[#1f2937] border border-[#1f2937] text-[#f8fafc] text-xs font-semibold transition duration-150 active:scale-97"
             >
-              Homoglyph Sandbox
+              Homoglyph CLI Sandbox
             </button>
           </div>
         </div>
 
-        {/* Mercury Signature Virtual Defense Card Mockup (3D tilt & high-trust styling) */}
-        <div className="relative w-full max-w-sm rounded-2xl bg-gradient-to-br from-white via-[#f8fafc] to-slate-100 p-6 border border-slate-200/90 shadow-sm transition hover:shadow-md duration-200">
-          <div className="flex items-center justify-between mb-8">
+        {/* Theme #132 Signature Terminal Window with Syntax Highlighting */}
+        <div className="w-full max-w-lg rounded-[8px] bg-[#111827] border border-[#1f2937] shadow-2xl overflow-hidden font-mono">
+          {/* Terminal Titlebar with dots and tabs */}
+          <div className="px-4 py-2.5 bg-[#030712] border-b border-[#1f2937] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#0284c7] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <span className="text-xs font-bold text-slate-900 font-mono tracking-tight">ASTRA DEFENSE ID</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+              <span className="text-[11px] text-[#94a3b8] ml-2 font-mono">astra-daemon.sh</span>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
-              VERIFIED
-            </span>
+
+            <div className="flex items-center gap-1">
+              {(['cli', 'python', 'webhook'] as const).map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveCliTab(tab)}
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono transition ${
+                    activeCliTab === tab
+                      ? 'bg-[#111827] text-[#38bdf8] border border-[#1f2937]'
+                      : 'text-[#94a3b8] hover:text-[#f8fafc]'
+                  }`}
+                >
+                  {tab.toUpperCase()}
+                </button>
+              ))}
+              <button
+                onClick={() => copyCode(codeSnippets[activeCliTab])}
+                className="ml-2 text-[#94a3b8] hover:text-[#f8fafc]"
+                title="Copy code"
+              >
+                {copiedSnippet ? <Check className="w-3 h-3 text-[#38bdf8]" /> : <Copy className="w-3 h-3" />}
+              </button>
+            </div>
           </div>
 
-          <div className="space-y-1 font-mono">
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest">Protected Brand Entity</div>
-            <div className="text-lg font-bold text-slate-900 tracking-tight">Acme CyberDefense Technologies</div>
-            <div className="text-xs text-slate-500 tnum pt-2">SHA-256: 9f83•••0b41•••2ec4</div>
+          {/* Terminal Code Snippet Body */}
+          <div className="p-4 bg-[#030712] text-xs font-mono text-[#f8fafc] overflow-x-auto leading-relaxed select-all">
+            <pre className="text-[#94a3b8]">
+              <code>
+                {activeCliTab === 'cli' && (
+                  <>
+                    <span className="text-[#38bdf8]">$</span> <span className="text-[#f8fafc]">npm i -g @astra/secops</span>{'\n'}
+                    <span className="text-[#38bdf8]">$</span> <span className="text-[#f8fafc]">astra connect --platform x_twitter --webhook https://astra.sh/wh</span>{'\n'}
+                    <span className="text-emerald-400">✓ Registered 248 social hooks</span>{'\n'}
+                    <span className="text-emerald-400">✓ Real-time AI threat stream established</span>{'\n'}
+                    <span className="text-[#38bdf8]">ℹ Intercepting incoming DM payloads with 14ms latency...</span>
+                  </>
+                )}
+                {activeCliTab === 'python' && (
+                  <>
+                    <span className="text-[#38bdf8]">from</span> astra_secops <span className="text-[#38bdf8]">import</span> ThreatEngine, ChannelConnector{'\n\n'}
+                    engine = ThreatEngine(model=<span className="text-emerald-400">&quot;astra-forensics-v3&quot;</span>){'\n'}
+                    connector = ChannelConnector(platform=<span className="text-emerald-400">&quot;instagram&quot;</span>){'\n\n'}
+                    <span className="text-[#38bdf8]">@connector.on_inbound_dm</span>{'\n'}
+                    <span className="text-[#38bdf8]">def</span> <span className="text-amber-400">inspect_payload</span>(msg):{'\n'}
+                    {'    '}verdict = engine.analyze(msg.content, msg.sender){'\n'}
+                    {'    '}<span className="text-[#38bdf8]">if</span> verdict.is_critical:{'\n'}
+                    {'        '}engine.airgap_quarantine(msg.id){'\n'}
+                    {'        '}engine.dispatch_dmca_takedown(target=msg.sender.handle)
+                  </>
+                )}
+                {activeCliTab === 'webhook' && (
+                  <>
+                    <span className="text-[#38bdf8]">POST</span> /api/webhooks/x_twitter HTTP/1.1{'\n'}
+                    Host: api.astra.security{'\n'}
+                    X-Astra-Signature: sha256=9f83...2ec4{'\n'}
+                    Content-Type: application/json{'\n\n'}
+                    {`{
+  "event": "direct_message_received",
+  "sender": { "handle": "acme.supportt", "verified": false },
+  "payload": "Download security update: https://apk-mirror.top/app.apk"
+}`}
+                  </>
+                )}
+              </code>
+            </pre>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs font-mono">
-            <span className="text-slate-400">SOC Policy: #2026-PRO</span>
-            <span className="text-[#0284c7] font-semibold flex items-center gap-1">
-              Live Monitor <ArrowRight className="w-3 h-3" />
+          <div className="px-4 py-2 bg-[#111827] border-t border-[#1f2937] flex items-center justify-between text-[11px] text-[#94a3b8]">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              Runtime: Node.js 22 / Next.js 16 (Turbopack)
             </span>
+            <span className="text-[#38bdf8]">docs.astra.sh/cli</span>
           </div>
         </div>
       </div>
 
-      {/* Top 4 Stat Cards: Tabular Numeric Counter Cards */}
+      {/* Top 4 Stat Cards: Theme #132 Monospace Minimalist Hub Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Total Threats Detected */}
-        <div className="mercury-card rounded-xl p-5 flex flex-col justify-between">
+        <div className="pulumi-card p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-lg bg-[#e0f2fe] flex items-center justify-center text-[#0284c7]">
-              <Shield className="w-4 h-4 fill-[#0284c7]/20" strokeWidth={1.5} />
+            <div className="w-9 h-9 rounded-[6px] bg-[#1f2937] border border-[#374151] flex items-center justify-center text-[#38bdf8]">
+              <Shield className="w-4 h-4" strokeWidth={1.5} />
             </div>
             <svg className="w-20 h-7" viewBox="0 0 80 30" fill="none">
-              <path d="M2 22 Q 18 28, 30 16 T 50 14 T 70 8 T 78 12" stroke="#0284c7" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M2 22 Q 18 28, 30 16 T 50 14 T 70 8 T 78 12" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" fill="none" />
             </svg>
           </div>
 
-          <div className="mt-4">
-            <div className="text-xs font-medium text-slate-500">Total Threats Detected</div>
-            <div className="text-2xl font-black text-slate-900 mt-1 tracking-tight tnum font-mono">248</div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-2 font-mono tnum">
+          <div className="mt-4 font-mono">
+            <div className="text-[11px] text-[#94a3b8] uppercase tracking-wider">Total Threats Flagged</div>
+            <div className="text-2xl font-black text-[#f8fafc] mt-1 tracking-tight tnum">248</div>
+            <div className="flex items-center gap-1 text-xs text-emerald-400 mt-2 tnum">
               <ArrowDownRight className="w-3.5 h-3.5" />
               <span>32%</span>
-              <span className="text-slate-400 font-normal ml-0.5">vs previous 30 days</span>
+              <span className="text-[#94a3b8] font-normal ml-0.5">vs 30d baseline</span>
             </div>
           </div>
         </div>
 
         {/* Card 2: Fake Profiles */}
-        <div className="mercury-card rounded-xl p-5 flex flex-col justify-between">
+        <div className="pulumi-card p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center text-red-600">
+            <div className="w-9 h-9 rounded-[6px] bg-[#1f2937] border border-[#374151] flex items-center justify-center text-rose-400">
               <Fingerprint className="w-4 h-4" strokeWidth={1.5} />
             </div>
             <svg className="w-20 h-7" viewBox="0 0 80 30" fill="none">
-              <path d="M2 20 Q 20 8, 35 22 T 55 12 T 78 20" stroke="#f87171" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M2 20 Q 20 8, 35 22 T 55 12 T 78 20" stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" fill="none" />
             </svg>
           </div>
 
-          <div className="mt-4">
-            <div className="text-xs font-medium text-slate-500">Fake Profiles</div>
-            <div className="text-2xl font-black text-slate-900 mt-1 tracking-tight tnum font-mono">96</div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-2 font-mono tnum">
+          <div className="mt-4 font-mono">
+            <div className="text-[11px] text-[#94a3b8] uppercase tracking-wider">Impersonation Profiles</div>
+            <div className="text-2xl font-black text-[#f8fafc] mt-1 tracking-tight tnum">96</div>
+            <div className="flex items-center gap-1 text-xs text-emerald-400 mt-2 tnum">
               <ArrowDownRight className="w-3.5 h-3.5" />
               <span>18%</span>
-              <span className="text-slate-400 font-normal ml-0.5">vs previous 30 days</span>
+              <span className="text-[#94a3b8] font-normal ml-0.5">vs 30d baseline</span>
             </div>
           </div>
         </div>
 
         {/* Card 3: Scam Links */}
-        <div className="mercury-card rounded-xl p-5 flex flex-col justify-between">
+        <div className="pulumi-card p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+            <div className="w-9 h-9 rounded-[6px] bg-[#1f2937] border border-[#374151] flex items-center justify-center text-emerald-400">
               <LinkIcon className="w-4 h-4" strokeWidth={1.5} />
             </div>
             <svg className="w-20 h-7" viewBox="0 0 80 30" fill="none">
@@ -250,457 +349,246 @@ export function OverviewDashboard({
             </svg>
           </div>
 
-          <div className="mt-4">
-            <div className="text-xs font-medium text-slate-500">Scam Links</div>
-            <div className="text-2xl font-black text-slate-900 mt-1 tracking-tight tnum font-mono">71</div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-2 font-mono tnum">
+          <div className="mt-4 font-mono">
+            <div className="text-[11px] text-[#94a3b8] uppercase tracking-wider">Phishing Domains & URLs</div>
+            <div className="text-2xl font-black text-[#f8fafc] mt-1 tracking-tight tnum">71</div>
+            <div className="flex items-center gap-1 text-xs text-emerald-400 mt-2 tnum">
               <ArrowDownRight className="w-3.5 h-3.5" />
               <span>41%</span>
-              <span className="text-slate-400 font-normal ml-0.5">vs previous 30 days</span>
+              <span className="text-[#94a3b8] font-normal ml-0.5">vs 30d baseline</span>
             </div>
           </div>
         </div>
 
-        {/* Card 4: Fake Apps */}
-        <div className="mercury-card rounded-xl p-5 flex flex-col justify-between">
+        {/* Card 4: Rogue Apps & APKs */}
+        <div className="pulumi-card p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center text-[#0284c7]">
-              <Package className="w-4 h-4" strokeWidth={1.5} />
+            <div className="w-9 h-9 rounded-[6px] bg-[#1f2937] border border-[#374151] flex items-center justify-center text-amber-400">
+              <Smartphone className="w-4 h-4" strokeWidth={1.5} />
             </div>
             <svg className="w-20 h-7" viewBox="0 0 80 30" fill="none">
-              <path d="M2 22 Q 18 26, 32 14 T 52 18 T 78 10" stroke="#0284c7" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M2 18 Q 20 28, 40 14 T 60 22 T 78 12" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" fill="none" />
             </svg>
           </div>
 
-          <div className="mt-4">
-            <div className="text-xs font-medium text-slate-500">Fake Apps</div>
-            <div className="text-2xl font-black text-slate-900 mt-1 tracking-tight tnum font-mono">34</div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-2 font-mono tnum">
+          <div className="mt-4 font-mono">
+            <div className="text-[11px] text-[#94a3b8] uppercase tracking-wider">Rogue Mobile APKs</div>
+            <div className="text-2xl font-black text-[#f8fafc] mt-1 tracking-tight tnum">12</div>
+            <div className="flex items-center gap-1 text-xs text-emerald-400 mt-2 tnum">
               <ArrowDownRight className="w-3.5 h-3.5" />
-              <span>27%</span>
-              <span className="text-slate-400 font-normal ml-0.5">vs previous 30 days</span>
+              <span>8%</span>
+              <span className="text-[#94a3b8] font-normal ml-0.5">vs 30d baseline</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Middle Row: Threats Over Time & Threats by Source */}
+      {/* Charts Row: Dark Canvas with #38bdf8 Accent Glow */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left: Threats Over Time Area Chart */}
-        <div className="lg:col-span-2 mercury-card rounded-xl p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        {/* Main Area Chart: Threat Detection Velocity */}
+        <div className="lg:col-span-2 pulumi-card p-6 flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4 border-b border-[#1f2937]">
             <div>
-              <h2 className="text-base font-bold text-slate-900">Threats Over Time</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Total incidents detected across connected platforms</p>
+              <h2 className="text-sm font-bold text-[#f8fafc] font-mono flex items-center gap-2">
+                <span>THREAT DETECTION VELOCITY</span>
+                <span className="text-[10px] text-[#38bdf8] bg-[#38bdf8]/15 px-2 py-0.5 rounded border border-[#38bdf8]/30">LIVE</span>
+              </h2>
+              <p className="text-xs text-[#94a3b8] mt-0.5 font-mono">
+                Real-time ingestion across X, Instagram, Facebook, and APK mirrors
+              </p>
             </div>
 
-            <div className="relative">
-              <select
-                value={threatTimeFilter}
-                onChange={(e) => setThreatTimeFilter(e.target.value)}
-                className="appearance-none bg-[#f8fafc] border border-slate-200 rounded-lg px-3.5 py-1.5 pr-8 text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer focus:outline-none focus:border-[#0284c7]"
-              >
-                <option>All Threat Types</option>
-                <option>Impersonation Profiles</option>
-                <option>Counterfeit Mobile APKs</option>
-                <option>Phishing Domains</option>
-              </select>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="flex items-center gap-2 font-mono text-xs">
+              <span className="flex items-center gap-1.5 text-[#f8fafc]">
+                <span className="w-2 h-2 rounded-full bg-[#38bdf8]" />
+                All Threats
+              </span>
+              <span className="flex items-center gap-1.5 text-[#94a3b8]">
+                <span className="w-2 h-2 rounded-full bg-[#1f2937]" />
+                Quarantined
+              </span>
             </div>
           </div>
 
-          <div className="relative w-full h-56 pt-2">
-            {/* Tooltip on Sep 12 */}
-            <div className="absolute left-[36%] top-3 -translate-x-1/2 bg-white rounded-lg px-3 py-1.5 shadow-sm border border-slate-200 z-20 pointer-events-none flex flex-col items-center">
-              <div className="text-[10px] text-slate-400 font-mono">Sep 12</div>
-              <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5 font-mono tnum">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
-                62 threats
-              </div>
-              <div className="w-2 h-2 bg-white border-r border-b border-slate-200 rotate-45 -mb-2 mt-0.5" />
-            </div>
-
-            <svg className="w-full h-44 overflow-visible" viewBox="0 0 700 160" preserveAspectRatio="none">
+          {/* SVG Area Chart */}
+          <div className="relative h-64 w-full mt-6">
+            <svg className="w-full h-full overflow-visible" viewBox="0 0 500 200" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="mercuryChartGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.25" />
-                  <stop offset="70%" stopColor="#0284c7" stopOpacity="0.04" />
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0.0" />
+                <linearGradient id="pulumiAccentGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
 
-              <line x1="0" y1="10" x2="700" y2="10" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="0" y1="50" x2="700" y2="50" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="0" y1="90" x2="700" y2="90" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="0" y1="130" x2="700" y2="130" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="4 4" />
+              {/* Grid Lines */}
+              <line x1="0" y1="50" x2="500" y2="50" stroke="#1f2937" strokeDasharray="3 3" />
+              <line x1="0" y1="100" x2="500" y2="100" stroke="#1f2937" strokeDasharray="3 3" />
+              <line x1="0" y1="150" x2="500" y2="150" stroke="#1f2937" strokeDasharray="3 3" />
 
+              {/* Area */}
               <path
-                d="M 0 145 C 50 140, 70 125, 120 115 C 160 100, 200 40, 250 35 C 290 85, 330 110, 380 95 C 430 85, 470 110, 520 40 C 560 90, 600 80, 700 135 L 700 160 L 0 160 Z"
-                fill="url(#mercuryChartGradient)"
+                d="M 0 160 Q 60 140, 100 120 T 200 110 T 300 60 T 380 40 T 450 85 T 500 70 L 500 200 L 0 200 Z"
+                fill="url(#pulumiAccentGradient)"
               />
 
+              {/* Line */}
               <path
-                d="M 0 145 C 50 140, 70 125, 120 115 C 160 100, 200 40, 250 35 C 290 85, 330 110, 380 95 C 430 85, 470 110, 520 40 C 560 90, 600 80, 700 135"
+                d="M 0 160 Q 60 140, 100 120 T 200 110 T 300 60 T 380 40 T 450 85 T 500 70"
                 fill="none"
-                stroke="#0284c7"
+                stroke="#38bdf8"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
 
-              <circle cx="250" cy="35" r="4.5" fill="#0284c7" stroke="#ffffff" strokeWidth="2.5" />
+              {/* Peak Point on Sep 12 */}
+              <circle cx="380" cy="40" r="5" fill="#38bdf8" stroke="#030712" strokeWidth="2" />
             </svg>
 
-            <div className="flex justify-between items-center text-[11px] text-slate-400 font-mono mt-3 px-1 tnum">
-              <span>Sep 1</span>
-              <span>Sep 5</span>
-              <span>Sep 10</span>
-              <span>Sep 15</span>
-              <span>Sep 20</span>
-              <span>Sep 25</span>
-              <span>Sep 30</span>
+            {/* Peak Tooltip */}
+            <div className="absolute left-[70%] top-[8%] -translate-x-1/2 p-2 rounded-[6px] bg-[#030712] border border-[#1f2937] text-xs font-mono text-[#f8fafc] shadow-lg pointer-events-none">
+              <div className="text-[10px] text-[#94a3b8]">Peak: Sep 12, 14:00 UTC</div>
+              <div className="text-[#38bdf8] font-bold mt-0.5 tnum">48 threats / hr</div>
             </div>
+          </div>
+
+          <div className="flex justify-between text-xs font-mono text-[#94a3b8] pt-3 border-t border-[#1f2937]">
+            <span>Aug 14</span>
+            <span>Aug 21</span>
+            <span>Aug 28</span>
+            <span>Sep 04</span>
+            <span>Sep 11</span>
           </div>
         </div>
 
-        {/* Right: Threats by Source Donut Chart */}
-        <div className="mercury-card rounded-xl p-6 flex flex-col justify-between">
-          <div>
-            <h2 className="text-base font-bold text-slate-900">Threats by Source</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Platform distribution telemetry</p>
+        {/* Donut Chart: Threat Distribution by Channel */}
+        <div className="pulumi-card p-6 flex flex-col justify-between font-mono">
+          <div className="pb-4 border-b border-[#1f2937]">
+            <h2 className="text-sm font-bold text-[#f8fafc]">ATTACK SURFACE VECTOR</h2>
+            <p className="text-xs text-[#94a3b8] mt-0.5">Distribution by connected channel</p>
           </div>
 
-          <div className="my-4 flex items-center justify-between gap-4">
-            <div className="relative w-36 h-36 shrink-0 flex items-center justify-center">
-              <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#ec4899" strokeWidth="11" strokeDasharray="64.5 174.5" strokeDashoffset="0" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#0284c7" strokeWidth="11" strokeDasharray="52.5 186.5" strokeDashoffset="-64.5" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#0f172a" strokeWidth="11" strokeDasharray="45.5 193.5" strokeDashoffset="-117" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#06b6d4" strokeWidth="11" strokeDasharray="36 203" strokeDashoffset="-162.5" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#ef4444" strokeWidth="11" strokeDasharray="24 215" strokeDashoffset="-198.5" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#94a3b8" strokeWidth="11" strokeDasharray="17 222" strokeDashoffset="-222.5" />
-              </svg>
+          <div className="flex items-center justify-center my-6 relative">
+            <svg className="w-44 h-44 -rotate-90" viewBox="0 0 100 100">
+              {/* Instagram (40%) */}
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#38bdf8" strokeWidth="12" strokeDasharray="95.5 238.7" strokeDashoffset="0" />
+              {/* X/Twitter (28%) */}
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#0284c7" strokeWidth="12" strokeDasharray="66.8 238.7" strokeDashoffset="-95.5" />
+              {/* Facebook (18%) */}
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#1d4ed8" strokeWidth="12" strokeDasharray="43 238.7" strokeDashoffset="-162.3" />
+              {/* Playstore & Others (14%) */}
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#374151" strokeWidth="12" strokeDasharray="33.4 238.7" strokeDashoffset="-205.3" />
+            </svg>
 
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                <span className="text-lg font-black text-slate-900 leading-none tnum font-mono">248</span>
-                <span className="text-[10px] text-slate-400 font-medium mt-0.5">Total</span>
-              </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span className="text-2xl font-bold text-[#f8fafc] tnum">248</span>
+              <span className="text-[10px] text-[#94a3b8] uppercase">Active Targets</span>
             </div>
+          </div>
 
-            <div className="space-y-2 text-xs flex-1 min-w-0 font-mono tnum">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#ec4899] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">Instagram</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">68</strong> 27%
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#0284c7] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">Facebook</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">54</strong> 22%
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#0f172a] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">X (Twitter)</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">46</strong> 19%
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#06b6d4] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">TikTok</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">38</strong> 15%
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#ef4444] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">YouTube</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">24</strong> 10%
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#94a3b8] shrink-0" />
-                  <span className="text-slate-700 font-sans truncate font-medium">Others</span>
-                </div>
-                <div className="text-slate-500 text-[11px] shrink-0">
-                  <strong className="text-slate-900">18</strong> 7%
-                </div>
-              </div>
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between text-[#94a3b8]">
+              <span className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#38bdf8]" />
+                Instagram (DMs & Clones)
+              </span>
+              <span className="text-[#f8fafc] font-semibold tnum">40%</span>
+            </div>
+            <div className="flex items-center justify-between text-[#94a3b8]">
+              <span className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7]" />
+                X / Twitter (Botnets)
+              </span>
+              <span className="text-[#f8fafc] font-semibold tnum">28%</span>
+            </div>
+            <div className="flex items-center justify-between text-[#94a3b8]">
+              <span className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#1d4ed8]" />
+                Facebook & Meta
+              </span>
+              <span className="text-[#f8fafc] font-semibold tnum">18%</span>
+            </div>
+            <div className="flex items-center justify-between text-[#94a3b8]">
+              <span className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#374151]" />
+                Rogue APK Mirrors
+              </span>
+              <span className="text-[#f8fafc] font-semibold tnum">14%</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Row: Recent Threats Table & Right Column Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left: Recent Threats Table (Hairline border & high-craft rows) */}
-        <div className="lg:col-span-2 mercury-card rounded-xl p-6">
-          <div className="flex items-center justify-between mb-5">
-            <div>
-              <h2 className="text-base font-bold text-slate-900">Recent Threats</h2>
-              <p className="text-xs text-slate-500 mt-0.5">High-priority actionable incidents</p>
-            </div>
-            <button
-              onClick={() => onNavigateToTab('threats')}
-              className="text-xs font-semibold text-[#0284c7] hover:text-[#0369a1] flex items-center gap-1 transition"
-            >
-              View all <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+      {/* High-Craft Threat Feed Ledger Table */}
+      <div className="pulumi-card overflow-hidden font-mono">
+        <div className="p-4 bg-[#030712] border-b border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[#f8fafc] flex items-center gap-2">
+              <Terminal className="w-3.5 h-3.5 text-[#38bdf8]" />
+              ACTIVE INCIDENT TELEMETRY FEED
+            </h2>
+            <p className="text-[11px] text-[#94a3b8] mt-0.5">
+              Live heuristic stream flagged by Astra Core 3.2
+            </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-slate-100 text-slate-400 font-medium">
-                  <th className="pb-3 font-medium">Type</th>
-                  <th className="pb-3 font-medium">Details</th>
-                  <th className="pb-3 font-medium text-center">Source</th>
-                  <th className="pb-3 font-medium">Risk</th>
-                  <th className="pb-3 font-medium">Detected</th>
-                  <th className="pb-3 font-medium text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {recentThreats.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50/70 transition">
-                    <td className="py-3.5 pr-2 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        {item.typeIcon === 'mask' && (
-                          <div className="w-6 h-6 rounded-md bg-red-50 text-red-500 flex items-center justify-center text-xs">
-                            🎭
-                          </div>
-                        )}
-                        {item.typeIcon === 'link' && (
-                          <div className="w-6 h-6 rounded-md bg-[#e0f2fe] text-[#0284c7] flex items-center justify-center">
-                            <LinkIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
-                          </div>
-                        )}
-                        {item.typeIcon === 'package' && (
-                          <div className="w-6 h-6 rounded-md bg-indigo-50 text-[#0284c7] flex items-center justify-center">
-                            <Package className="w-3.5 h-3.5" strokeWidth={1.5} />
-                          </div>
-                        )}
-                        <span className="font-semibold text-slate-900">{item.type}</span>
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 pr-3 min-w-[160px]">
-                      <div className="font-bold text-slate-900 font-mono text-xs leading-snug">{item.title}</div>
-                      <div className="text-[11px] text-slate-400 truncate">{item.subtitle}</div>
-                    </td>
-
-                    <td className="py-3.5 px-2 text-center whitespace-nowrap">
-                      <div className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 text-slate-700">
-                        {item.source === 'instagram' && <InstagramIcon className="w-3.5 h-3.5 text-pink-600" />}
-                        {item.source === 'x_twitter' && <span className="font-bold text-xs">𝕏</span>}
-                        {item.source === 'playstore' && <Smartphone className="w-3.5 h-3.5 text-emerald-600" strokeWidth={1.5} />}
-                        {item.source === 'facebook' && <FacebookIcon className="w-3.5 h-3.5 text-blue-600" />}
-                        {item.source === 'tiktok' && <span className="font-bold text-xs">♪</span>}
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 pr-3 whitespace-nowrap font-mono tnum">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${item.riskColor}`}>
-                        {item.risk}
-                      </span>
-                    </td>
-
-                    <td className="py-3.5 pr-3 text-slate-500 whitespace-nowrap text-[11px] font-mono tnum">
-                      {item.time}
-                    </td>
-
-                    <td className="py-3.5 text-right whitespace-nowrap">
-                      <button
-                        onClick={() => onOpenTakedown(item)}
-                        className="px-3 py-1 rounded-md bg-[#e0f2fe]/70 hover:bg-[#e0f2fe] text-[#0284c7] font-semibold text-xs transition duration-150 active:scale-97"
-                      >
-                        Take Action
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex items-center gap-2">
+            <select
+              value={threatTimeFilter}
+              onChange={(e) => setThreatTimeFilter(e.target.value)}
+              className="bg-[#111827] border border-[#1f2937] text-xs text-[#94a3b8] rounded-[6px] px-2.5 py-1 focus:outline-none focus:border-[#38bdf8]"
+            >
+              <option value="All Threat Types">All Threat Vectors</option>
+              <option value="Fake Profile">Impersonation Profiles</option>
+              <option value="Scam Link">Phishing Links</option>
+              <option value="Fake App">Counterfeit APKs</option>
+            </select>
           </div>
         </div>
 
-        {/* Right Column: Threats by Region & Active Monitored Assets */}
-        <div className="space-y-6 flex flex-col justify-between">
-          {/* Threats by Region */}
-          <div className="mercury-card rounded-xl p-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-base font-bold text-slate-900">Threats by Region</h3>
-              <button
-                onClick={() => onNavigateToTab('threats')}
-                className="text-xs font-semibold text-[#0284c7] hover:text-[#0369a1] flex items-center gap-1"
-              >
-                View map <ArrowRight className="w-3 h-3" />
-              </button>
-            </div>
-
-            <div className="relative w-full h-20 mb-4 flex items-center justify-center bg-slate-50 rounded-lg overflow-hidden border border-slate-100">
-              <svg className="w-full h-full opacity-60" viewBox="0 0 300 100" fill="none">
-                <circle cx="60" cy="40" r="14" fill="#0284c7" fillOpacity="0.15" />
-                <circle cx="60" cy="40" r="4" fill="#0284c7" />
-                <circle cx="150" cy="50" r="16" fill="#0284c7" fillOpacity="0.18" />
-                <circle cx="150" cy="50" r="5" fill="#0284c7" />
-                <circle cx="210" cy="45" r="18" fill="#0284c7" fillOpacity="0.22" />
-                <circle cx="210" cy="45" r="6" fill="#0284c7" />
-                <circle cx="240" cy="65" r="12" fill="#0284c7" fillOpacity="0.15" />
-                <circle cx="240" cy="65" r="3.5" fill="#0284c7" />
-              </svg>
-            </div>
-
-            <div className="space-y-2.5 text-xs font-mono tnum">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-orange-100 text-orange-700 text-[10px] font-bold flex items-center justify-center">🇮🇳</span>
-                  <span className="text-slate-700 font-sans font-medium">India</span>
+        <div className="divide-y divide-[#1f2937]">
+          {recentThreats.map((threat) => (
+            <div
+              key={threat.id}
+              onClick={() => onSelectThreat(threat.id)}
+              className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#111827]/80 transition cursor-pointer"
+            >
+              <div className="flex items-start gap-3.5 min-w-0">
+                <div className="w-8 h-8 rounded-[6px] bg-[#111827] border border-[#1f2937] flex items-center justify-center shrink-0 text-[#38bdf8]">
+                  {threat.type === 'Fake Profile' && <Fingerprint className="w-4 h-4" strokeWidth={1.5} />}
+                  {threat.type === 'Scam Link' && <LinkIcon className="w-4 h-4" strokeWidth={1.5} />}
+                  {threat.type === 'Fake App' && <Package className="w-4 h-4" strokeWidth={1.5} />}
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-[#0284c7] h-full rounded-full" style={{ width: '32%' }} />
+
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-sm text-[#f8fafc]">{threat.title}</span>
+                    <span className="text-[10px] uppercase px-1.5 py-0.2 rounded bg-[#030712] border border-[#1f2937] text-[#94a3b8]">
+                      {threat.source}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase px-2 py-0.2 rounded border ${threat.riskColor}`}>
+                      {threat.risk} RISK
+                    </span>
                   </div>
-                  <span className="text-slate-500 text-[11px] w-7 text-right">32%</span>
+                  <div className="text-xs text-[#94a3b8] mt-1 truncate">
+                    {threat.subtitle}
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold flex items-center justify-center">🇺🇸</span>
-                  <span className="text-slate-700 font-sans font-medium">United States</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-[#0284c7] h-full rounded-full" style={{ width: '18%' }} />
-                  </div>
-                  <span className="text-slate-500 text-[11px] w-7 text-right">18%</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-700 text-[10px] font-bold flex items-center justify-center">🇮🇩</span>
-                  <span className="text-slate-700 font-sans font-medium">Indonesia</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-[#0284c7] h-full rounded-full" style={{ width: '12%' }} />
-                  </div>
-                  <span className="text-slate-500 text-[11px] w-7 text-right">12%</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold flex items-center justify-center">🇧🇷</span>
-                  <span className="text-slate-700 font-sans font-medium">Brazil</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-[#0284c7] h-full rounded-full" style={{ width: '8%' }} />
-                  </div>
-                  <span className="text-slate-500 text-[11px] w-7 text-right">8%</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold flex items-center justify-center">🇬🇧</span>
-                  <span className="text-slate-700 font-sans font-medium">United Kingdom</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-[#0284c7] h-full rounded-full" style={{ width: '7%' }} />
-                  </div>
-                  <span className="text-slate-500 text-[11px] w-7 text-right">7%</span>
-                </div>
+              <div className="flex items-center gap-3 shrink-0 self-end md:self-auto text-xs">
+                <span className="text-[#94a3b8] text-[11px] tnum">{threat.time}</span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenTakedown(threat);
+                  }}
+                  className="px-3 py-1 rounded-[6px] bg-[#111827] hover:bg-[#1f2937] text-[#38bdf8] border border-[#1f2937] hover:border-[#38bdf8]/50 text-xs font-semibold transition"
+                >
+                  File Notice →
+                </button>
               </div>
             </div>
-          </div>
-
-          {/* Active Monitored Assets */}
-          <div className="mercury-card rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-bold text-slate-900">Active Monitored Assets</h3>
-              <button
-                onClick={() => onNavigateToTab('brand_assets')}
-                className="text-xs font-semibold text-[#0284c7] hover:text-[#0369a1] flex items-center gap-1"
-              >
-                Manage <ArrowRight className="w-3 h-3" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 xl:grid-cols-6 gap-2 text-center">
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-pink-50 text-pink-600 flex items-center justify-center mb-1">
-                  <InstagramIcon className="w-3.5 h-3.5" />
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">12</div>
-                <div className="text-[10px] text-slate-400">Accounts</div>
-              </div>
-
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center mb-1">
-                  <FacebookIcon className="w-3.5 h-3.5" />
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">8</div>
-                <div className="text-[10px] text-slate-400">Pages</div>
-              </div>
-
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-slate-100 text-slate-900 flex items-center justify-center mb-1 font-bold text-xs">
-                  𝕏
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">6</div>
-                <div className="text-[10px] text-slate-400">Handles</div>
-              </div>
-
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-red-50 text-red-600 flex items-center justify-center mb-1">
-                  <YoutubeIcon className="w-3.5 h-3.5" />
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">4</div>
-                <div className="text-[10px] text-slate-400">Channels</div>
-              </div>
-
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-sky-50 text-[#0284c7] flex items-center justify-center mb-1">
-                  <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">18</div>
-                <div className="text-[10px] text-slate-400">Domains</div>
-              </div>
-
-              <div className="p-2.5 rounded-lg bg-[#f8fafc] hover:bg-slate-100 transition flex flex-col items-center">
-                <div className="w-7 h-7 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1">
-                  <Smartphone className="w-3.5 h-3.5" strokeWidth={1.5} />
-                </div>
-                <div className="text-xs font-bold text-slate-900 font-mono tnum">6</div>
-                <div className="text-[10px] text-slate-400">Apps</div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

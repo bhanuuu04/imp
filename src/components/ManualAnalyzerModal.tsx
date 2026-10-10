@@ -11,7 +11,8 @@ import {
   X, 
   Terminal, 
   Sparkles, 
-  CheckCircle2 
+  CheckCircle2,
+  Code2
 } from 'lucide-react';
 
 interface ManualAnalyzerModalProps {
@@ -101,27 +102,27 @@ export function ManualAnalyzerModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
-      <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/80 backdrop-blur-xs animate-fade-in font-mono">
+      <div className="w-full max-w-3xl bg-[#030712] border border-[#1f2937] rounded-[8px] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-4 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700">
+            <div className="p-1.5 rounded-[4px] bg-[#030712] border border-[#1f2937] text-[#38bdf8]">
               <Terminal className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900">
-                Threat Diagnostic Sandbox
+              <h2 className="text-sm font-bold text-[#f8fafc]">
+                Astra Forensic CLI Diagnostic Sandbox
               </h2>
-              <p className="text-xs text-slate-500">
-                Evaluate candidate messages and handles against Astra&apos;s real-time risk scoring engine.
+              <p className="text-xs text-[#94a3b8] font-sans">
+                Evaluate candidate payloads and handles against Astra&apos;s real-time risk scoring engine.
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+            className="p-1 rounded text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#030712] transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -132,11 +133,11 @@ export function ManualAnalyzerModal({
           <form onSubmit={handleRunAnalysis} className="space-y-3.5">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="text-slate-700 font-medium">Platform Channel</label>
+                <label className="text-[#94a3b8] font-medium">Platform Channel</label>
                 <select
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value as SocialPlatform)}
-                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
+                  className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="x_twitter">X (Twitter)</option>
@@ -147,67 +148,67 @@ export function ManualAnalyzerModal({
               </div>
 
               <div>
-                <label className="text-slate-700 font-medium">Sender Username (@)</label>
+                <label className="text-[#94a3b8] font-medium">Sender Username (@)</label>
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. astra_support"
-                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+                  className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
                 />
               </div>
 
               <div>
-                <label className="text-slate-700 font-medium">Display Name</label>
+                <label className="text-[#94a3b8] font-medium">Display Name</label>
                 <input
                   type="text"
                   required
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="e.g. Astra Support ✓"
-                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
+                  className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-slate-700 font-medium">Followers Count</label>
+                <label className="text-[#94a3b8] font-medium">Followers Count</label>
                 <input
                   type="number"
                   value={followers}
                   onChange={(e) => setFollowers(Number(e.target.value))}
-                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+                  className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
                 />
               </div>
               <div>
-                <label className="text-slate-700 font-medium">Following Count</label>
+                <label className="text-[#94a3b8] font-medium">Following Count</label>
                 <input
                   type="number"
                   value={following}
                   onChange={(e) => setFollowing(Number(e.target.value))}
-                  className="w-full mt-1 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+                  className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-slate-700 font-medium">Inbound Message Body</label>
+              <label className="text-[#94a3b8] font-medium">Inbound Message Body</label>
               <textarea
                 required
                 rows={3}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Paste suspect message text..."
-                className="w-full mt-1 bg-white border border-slate-200 rounded-md p-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600 leading-relaxed"
+                className="w-full mt-1 bg-[#111827] border border-[#1f2937] rounded-[6px] p-2.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8] leading-relaxed"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center justify-center gap-2 mercury-btn-press"
+              className="w-full py-2 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition flex items-center justify-center gap-2 active:scale-97"
             >
               {loading ? (
                 <span>Executing Diagnostics...</span>
@@ -222,50 +223,50 @@ export function ManualAnalyzerModal({
 
           {/* Analysis Results View */}
           {analysis && (
-            <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-3 font-mono">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+            <div className="p-4 rounded-[6px] bg-[#111827] border border-[#1f2937] space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#1f2937] pb-3">
                 <div className="flex items-center gap-2">
                   <span className={`px-2 py-0.5 rounded text-[11px] font-semibold uppercase border tnum ${
                     analysis.severity === 'critical'
-                      ? 'bg-rose-50 text-rose-700 border-rose-200'
+                      ? 'bg-rose-950/60 text-rose-400 border-rose-900'
                       : analysis.severity === 'high'
-                      ? 'bg-amber-50 text-amber-800 border-amber-200'
-                      : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      ? 'bg-amber-950/60 text-amber-400 border-amber-900'
+                      : 'bg-emerald-950/60 text-emerald-400 border-emerald-900'
                   }`}>
                     {analysis.severity}
                   </span>
-                  <span className="text-xs font-bold text-slate-900 tnum">
+                  <span className="text-xs font-bold text-[#f8fafc] tnum">
                     Score: {analysis.riskScore}/100
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 text-xs tnum">
-                  <span className="text-slate-600">Impersonation: <strong className="text-amber-800">{analysis.impersonationScore}%</strong></span>
-                  <span className="text-slate-600">Fake Probability: <strong className="text-rose-600">{analysis.fakeAccountProbability}%</strong></span>
+                  <span className="text-[#94a3b8]">Impersonation: <strong className="text-amber-400">{analysis.impersonationScore}%</strong></span>
+                  <span className="text-[#94a3b8]">Fake Probability: <strong className="text-rose-400">{analysis.fakeAccountProbability}%</strong></span>
                 </div>
               </div>
 
-              <div className="text-xs text-slate-700 font-sans">
+              <div className="text-xs text-[#f8fafc] font-sans">
                 {analysis.summary}
               </div>
 
               {/* Matched Indicators */}
               <div className="space-y-2">
-                <div className="text-[10px] text-slate-400 uppercase font-semibold">Signals Triggered:</div>
+                <div className="text-[10px] text-[#94a3b8] uppercase font-semibold">Signals Triggered:</div>
                 {analysis.indicators.map((ind, i) => (
-                  <div key={i} className="p-2.5 rounded bg-white border border-slate-200 text-xs space-y-0.5">
-                    <div className="text-sky-700 font-semibold">{ind.title}</div>
-                    <div className="text-slate-500 text-[11px] font-sans">{ind.description}</div>
+                  <div key={i} className="p-2.5 rounded bg-[#030712] border border-[#1f2937] text-xs space-y-0.5">
+                    <div className="text-[#38bdf8] font-semibold">{ind.title}</div>
+                    <div className="text-[#94a3b8] text-[11px] font-sans">{ind.description}</div>
                   </div>
                 ))}
               </div>
 
               {/* Ingest to main feed button */}
               {onIngestAsNewMessage && (
-                <div className="pt-2 border-t border-slate-200 flex justify-end">
+                <div className="pt-2 border-t border-[#1f2937] flex justify-end">
                   <button
                     onClick={handleIngestToFeed}
-                    className="px-3.5 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium flex items-center gap-1.5 mercury-transition mercury-btn-press"
+                    className="px-3.5 py-1.5 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold flex items-center gap-1.5 transition active:scale-97"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Push to Active Inbox

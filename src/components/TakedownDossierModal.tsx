@@ -8,7 +8,9 @@ import {
   Copy, 
   Check, 
   ExternalLink, 
-  CheckCircle2 
+  CheckCircle2,
+  Terminal,
+  Code2
 } from 'lucide-react';
 
 interface TakedownDossierModalProps {
@@ -72,19 +74,19 @@ export function TakedownDossierModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
-      <div className="w-full max-w-2xl bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/80 backdrop-blur-xs animate-fade-in font-mono">
+      <div className="w-full max-w-2xl bg-[#030712] border border-[#1f2937] rounded-[8px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-4 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-md bg-rose-50 border border-rose-200 text-rose-700">
+            <div className="p-1.5 rounded-[4px] bg-rose-950/60 border border-rose-900 text-rose-400">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900">
-                DMCA & Impersonation Enforcement Notice
+              <h2 className="text-sm font-bold text-[#f8fafc]">
+                DMCA & Impersonation Enforcement Dossier
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[#94a3b8] font-sans">
                 Target: @{message.sender.username} on {message.platform.toUpperCase()}
               </p>
             </div>
@@ -92,7 +94,7 @@ export function TakedownDossierModal({
 
           <button
             onClick={onClose}
-            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+            className="p-1 rounded text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#030712] transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -101,20 +103,20 @@ export function TakedownDossierModal({
         {/* Content */}
         <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs">
           {loading ? (
-            <div className="py-12 text-center text-slate-500 space-y-2">
-              <p className="font-medium text-slate-700">Compiling Legal Rights Evidence & Formulating Notice...</p>
+            <div className="py-12 text-center text-[#94a3b8] space-y-2">
+              <p className="font-medium text-[#f8fafc]">Compiling Legal Rights Evidence & Formulating Notice...</p>
             </div>
           ) : dossier ? (
             <>
               {/* Destination Abuse Portal */}
-              <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
+              <div className="p-3.5 rounded-[6px] bg-[#111827] border border-[#1f2937] flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-semibold">Filing Destination</div>
-                  <div className="text-xs font-semibold text-slate-900 mt-0.5">
+                  <div className="text-[10px] text-[#94a3b8] uppercase font-semibold">Filing Destination</div>
+                  <div className="text-xs font-semibold text-[#f8fafc] mt-0.5">
                     {dossier.destination?.policy || 'Platform Abuse Desk'}
                   </div>
-                  <div className="text-slate-500 text-[11px] mt-0.5">
-                    Abuse Desk: <span className="font-mono text-slate-800 font-medium">{dossier.destination?.email}</span>
+                  <div className="text-[#94a3b8] text-[11px] mt-0.5">
+                    Abuse Desk: <span className="text-[#38bdf8] font-medium">{dossier.destination?.email}</span>
                   </div>
                 </div>
 
@@ -123,7 +125,7 @@ export function TakedownDossierModal({
                     href={dossier.destination.portal}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-medium transition"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#030712] hover:bg-[#111827] text-[#94a3b8] hover:text-[#f8fafc] border border-[#1f2937] font-medium transition"
                   >
                     Open Platform Desk <ExternalLink className="w-3 h-3" />
                   </a>
@@ -132,55 +134,55 @@ export function TakedownDossierModal({
 
               {/* Subject Line */}
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-slate-600 font-medium">
+                <div className="flex items-center justify-between text-[#94a3b8] font-medium">
                   <span>Formal Notice Subject Line</span>
                   <button
                     onClick={() => copyToClipboard(dossier.subject, 'subject')}
-                    className="text-sky-600 hover:underline flex items-center gap-1"
+                    className="text-[#38bdf8] hover:underline flex items-center gap-1"
                   >
-                    {copiedSubject ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedSubject ? <Check className="w-3 h-3 text-[#38bdf8]" /> : <Copy className="w-3 h-3" />}
                     {copiedSubject ? 'Copied' : 'Copy Subject'}
                   </button>
                 </div>
-                <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 text-slate-900 select-all font-sans font-medium">
+                <div className="p-2.5 rounded-[6px] bg-[#111827] border border-[#1f2937] text-[#f8fafc] select-all font-medium font-sans">
                   {dossier.subject}
                 </div>
               </div>
 
               {/* Notice Body */}
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-slate-600 font-medium">
+                <div className="flex items-center justify-between text-[#94a3b8] font-medium">
                   <span>Structured Legal Notice & Proof</span>
                   <button
                     onClick={() => copyToClipboard(dossier.bodyText, 'body')}
-                    className="text-sky-600 hover:underline flex items-center gap-1"
+                    className="text-[#38bdf8] hover:underline flex items-center gap-1"
                   >
-                    {copiedBody ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedBody ? <Check className="w-3 h-3 text-[#38bdf8]" /> : <Copy className="w-3 h-3" />}
                     {copiedBody ? 'Copied' : 'Copy Notice'}
                   </button>
                 </div>
-                <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 text-slate-800 whitespace-pre-wrap select-all max-h-64 overflow-y-auto leading-relaxed font-mono text-[11px]">
+                <div className="p-3.5 rounded-[6px] bg-[#111827] border border-[#1f2937] text-[#f8fafc] whitespace-pre-wrap select-all max-h-64 overflow-y-auto leading-relaxed text-[11px]">
                   {dossier.bodyText}
                 </div>
               </div>
             </>
           ) : (
-            <div className="text-rose-600 font-medium">Failed to generate takedown notice.</div>
+            <div className="text-rose-400 font-medium">Failed to generate takedown notice.</div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="p-3.5 bg-slate-50/70 border-t border-slate-200 flex items-center justify-between gap-3">
+        <div className="p-3.5 bg-[#111827] border-t border-[#1f2937] flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="px-3.5 py-1.5 rounded-md bg-white border border-slate-200 text-slate-700 text-xs font-medium hover:bg-slate-50 transition"
+            className="px-3.5 py-1.5 rounded-[6px] bg-[#030712] border border-[#1f2937] text-[#94a3b8] text-xs font-medium hover:bg-[#111827] transition"
           >
             Cancel
           </button>
 
           <button
             onClick={handleApplyAndFile}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium transition mercury-btn-press"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition active:scale-97"
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
             Mark Dispatched & Update Case

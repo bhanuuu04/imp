@@ -9,7 +9,9 @@ import {
   Sparkles, 
   Check, 
   Sliders, 
-  Save 
+  Save,
+  Terminal,
+  Code2
 } from 'lucide-react';
 
 export function SettingsPage() {
@@ -25,38 +27,38 @@ export function SettingsPage() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] p-6 lg:p-8 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-[#030712] p-6 lg:p-8 space-y-6 font-mono">
       {/* Header */}
-      <div className="pb-2 border-b border-slate-200">
+      <div className="pb-3 border-b border-[#1f2937]">
         <div className="flex items-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
-          <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase font-mono">
-            System Preferences
+          <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
+          <span className="text-[11px] font-semibold text-[#38bdf8] tracking-wider uppercase">
+            SecOps Daemon Configuration
           </span>
         </div>
-        <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+        <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#f8fafc]">
           Platform Security Settings
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-[#94a3b8] mt-1 font-sans">
           Tune algorithmic quarantine sensitivity, incident dispatch webhooks, and brand cryptographic assertions.
         </p>
       </div>
 
       <form onSubmit={handleSave} className="space-y-6 max-w-4xl">
         {/* Automated Quarantine Threshold */}
-        <div className="mercury-card p-6 space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-sky-600" />
+        <div className="terminal-window p-6 space-y-4">
+          <h2 className="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-[#38bdf8]" />
             Automated Quarantine & Interception Sensitivity
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#94a3b8] font-sans">
             Messages that receive a threat score exceeding this value will be automatically airgapped from reaching customer support agents.
           </p>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-600">Threshold Trigger:</span>
-              <span className="font-bold text-sky-600 tnum">{quarantineThreshold}/100</span>
+            <div className="flex justify-between text-xs">
+              <span className="text-[#94a3b8]">Threshold Trigger:</span>
+              <span className="font-bold text-[#38bdf8] tnum">{quarantineThreshold}/100</span>
             </div>
             <input
               type="range"
@@ -65,35 +67,35 @@ export function SettingsPage() {
               step="5"
               value={quarantineThreshold}
               onChange={(e) => setQuarantineThreshold(Number(e.target.value))}
-              className="w-full accent-sky-600 cursor-pointer"
+              className="w-full accent-[#38bdf8] cursor-pointer"
             />
           </div>
         </div>
 
         {/* Notifications & Dispatch */}
-        <div className="mercury-card p-6 space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <Bell className="w-4 h-4 text-sky-600" />
+        <div className="terminal-window p-6 space-y-4">
+          <h2 className="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+            <Bell className="w-4 h-4 text-[#38bdf8]" />
             Incident Pager & Webhook Dispatch
           </h2>
 
           <div className="space-y-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-500 mb-1 block">Slack / Discord Webhook URL</label>
+              <label className="text-[11px] font-medium text-[#94a3b8] mb-1 block">Slack / Discord Webhook URL</label>
               <input
                 type="text"
                 value={slackWebhook}
                 onChange={(e) => setSlackWebhook(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-sky-600"
+                className="w-full bg-[#111827] border border-[#1f2937] rounded-[6px] px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#38bdf8]"
               />
             </div>
 
-            <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-[#94a3b8] cursor-pointer">
               <input
                 type="checkbox"
                 checked={alertCriticalOnly}
                 onChange={(e) => setAlertCriticalOnly(e.target.checked)}
-                className="rounded accent-sky-600"
+                className="rounded accent-[#38bdf8]"
               />
               Alert on Critical severity events only (Risk Score &gt; 90)
             </label>
@@ -102,10 +104,10 @@ export function SettingsPage() {
 
         <button
           type="submit"
-          className="px-4 py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium mercury-transition flex items-center gap-1.5 mercury-btn-press"
+          className="px-4 py-2 rounded-[6px] bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#030712] text-xs font-bold transition flex items-center gap-1.5 active:scale-97"
         >
           {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-          {saved ? 'Settings Saved' : 'Save Platform Configuration'}
+          {saved ? 'Settings Saved' : 'Save Configuration'}
         </button>
       </form>
     </div>
